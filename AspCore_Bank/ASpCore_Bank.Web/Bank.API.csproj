@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AspCore_Bank.Entities\AspCore_Bank.Entities.csproj" />
+    <ProjectReference Include="..\AspCore_Bank.Entities\Bank.Entities.csproj" />
   </ItemGroup>
 
 </Project>

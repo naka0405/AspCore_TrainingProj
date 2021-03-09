@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Utils\Interfaces\" />
+    <Folder Include="Enums\Interfaces\" />
   </ItemGroup>
 
 </Project>
