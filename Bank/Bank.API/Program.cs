@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace ASpCore_Bank.Web
+namespace Bank.Web
 {
     public class Program
     {

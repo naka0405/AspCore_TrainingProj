@@ -1,7 +1,7 @@
 ﻿using Bank.Entities.Entities;
 using System.Collections.Generic;
 
-namespace AspCore_Bank.Entities
+namespace Bank.Entities
 {
     public class Client:BaseEntity
     {

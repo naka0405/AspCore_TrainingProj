@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bank.API", "ASpCore_Bank.Web\Bank.API.csproj", "{E690901B-B52F-4A53-9977-82BF2B4FBEE8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bank.API", "Bank.API\Bank.API.csproj", "{E690901B-B52F-4A53-9977-82BF2B4FBEE8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bank.DataAccess", "AspCore_Bank.Dal\Bank.DataAccess.csproj", "{EDE2581A-B7D0-42F0-A1BD-52367D20B678}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bank.DataAccess", "Bank.DataAccess\Bank.DataAccess.csproj", "{EDE2581A-B7D0-42F0-A1BD-52367D20B678}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bank.BusinessLogic", "AspCore_Bank.Bl\Bank.BusinessLogic.csproj", "{50AB237C-B276-4100-B91B-3BF7DC5838BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bank.BusinessLogic", "Bank.BusinessLogic\Bank.BusinessLogic.csproj", "{50AB237C-B276-4100-B91B-3BF7DC5838BD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bank.Entities", "AspCore_Bank.Entities\Bank.Entities.csproj", "{11A87BC0-9B9F-4E58-8409-78551ACD124C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bank.Entities", "Bank.Entities\Bank.Entities.csproj", "{11A87BC0-9B9F-4E58-8409-78551ACD124C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

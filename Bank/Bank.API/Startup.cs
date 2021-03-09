@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace ASpCore_Bank.Web
+namespace Bank.Web
 {
     public class Startup
     {

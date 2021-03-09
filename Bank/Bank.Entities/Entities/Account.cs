@@ -1,7 +1,7 @@
-﻿using AspCore_Bank.Entities.Utils;
-using Bank.Entities.Entities;
+﻿using Bank.Entities.Entities;
+using Bank.Entities.Utils;
 
-namespace AspCore_Bank.Entities
+namespace Bank.Entities
 {
     public class Account:BaseEntity
     {        

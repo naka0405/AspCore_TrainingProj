@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AspCore_Bank.Entities
+namespace Bank.Entities
 {
     public class Bank:BaseEntity
     {
