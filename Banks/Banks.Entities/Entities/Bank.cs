@@ -8,6 +8,6 @@ namespace Banks.Entities
     {
         [Required]
         public string BankName { get; set; }
-        public ICollection<Client> Clients { get; set; }
+        public virtual ICollection<Client> Clients { get; set; }
     }
 }

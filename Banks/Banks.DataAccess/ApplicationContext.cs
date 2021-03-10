@@ -14,12 +14,18 @@ namespace Banks.DataAccess
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
-        {
+        {            
             Database.EnsureCreated();
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLazyLoadingProxies();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Client>()
                .HasOne(x => x.Bank);
 
@@ -35,7 +41,6 @@ namespace Banks.DataAccess
 
             modelBuilder.Entity<User>(u =>
             {
-
                 u.HasKey(x => x.Id);
                 u.HasMany(x => x.Clients)
                 .WithOne(x => x.User)
@@ -46,17 +51,17 @@ namespace Banks.DataAccess
             modelBuilder.Entity<User>().HasData(
                new User[]
                {
-                    new User{Id="1", UserName="Petr", Year=1970, PasswordHash="123", Email="Petr@mail.ru"},
-                    new User{Id="2", UserName="Pavel", Year=2005, PasswordHash="123", Email="Petr@mail.ru"},
-                    new User{Id="3", UserName="Petya", Year=2012, PasswordHash="123", Email="Petr@mail.ru"},
+                    new User{Id="1", UserName="PetrLogin", Year=1970, PasswordHash="123", Email="Petr@mail.ru"},
+                    new User{Id="2", UserName="PavelLogin", Year=2005, PasswordHash="123", Email="Pavel@mail.ru"},
+                    new User{Id="3", UserName="PetyaLogin", Year=2012, PasswordHash="123", Email="Petya@mail.ru"},
                });
 
             modelBuilder.Entity<Client>().HasData(
                 new Client[]
                 {
-                    new Client{Id=1, UserId="1", BankId=1},
-                    new Client{Id=2, UserId="2", BankId=1},
-                    new Client{Id=3, UserId="3", BankId=2}
+                    new Client{Id=1, FirstName="Petr", LastName="Petrov", Code="1234567890", UserId="1", BankId=1},
+                    new Client{Id=2, FirstName="Pavel", LastName="Pavlov", Code="9087654321", UserId="2", BankId=1},
+                    new Client{Id=3, UserId="3", BankId=2, FirstName="Petya", LastName="Petin", Code="1472583690"}
                 });
 
             modelBuilder.Entity<Account>().HasData(

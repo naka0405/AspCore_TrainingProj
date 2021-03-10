@@ -9,6 +9,6 @@ namespace Banks.Entities.Entities
         [Required]
         [PersonalData]
         public int Year { get; set; }
-        public ICollection<Client> Clients { get; set; }
+        public virtual ICollection<Client> Clients { get; set; }
     }
 }

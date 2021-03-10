@@ -1,3 +1,4 @@
+using Arch.EntityFrameworkCore;
 using Banks.DataAccess;
 using Banks.Entities.Entities;
 using Microsoft.AspNetCore.Builder;
@@ -23,7 +24,8 @@ namespace Banks.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+            .UseLazyLoadingProxies());
 
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationContext>();

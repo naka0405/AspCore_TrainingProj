@@ -5,7 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Arch.EntityFrameworkCore.Proxies" Version="2.1.15" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="5.0.4" />
   </ItemGroup>
 
   <ItemGroup>
