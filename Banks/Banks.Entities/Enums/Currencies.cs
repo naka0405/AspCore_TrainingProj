@@ -1,4 +1,4 @@
-﻿namespace Bank.Entities.Utils
+﻿namespace Banks.Entities.Enums
 {
     public enum Currencies
     {
