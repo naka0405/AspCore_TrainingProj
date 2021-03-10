@@ -24,8 +24,7 @@ namespace Banks.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
-            .UseLazyLoadingProxies());
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationContext>();
