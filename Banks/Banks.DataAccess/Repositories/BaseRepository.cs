@@ -7,32 +7,20 @@ using System.Threading.Tasks;
 
 namespace Banks.DataAccess
 {
-    public class BaseRepository<TEntity> : IBaseRepository<TEntity>
+    public class BaseRepository<TEntity> : IBaseRepository<TEntity>, IDisposable
         where TEntity:BaseEntity
     {
-        internal ApplicationContext appContext;
-        internal DbSet<TEntity> dbSet;
+        protected ApplicationContext appContext;
+        protected DbSet<TEntity> dbSet;
 
         public BaseRepository(ApplicationContext context)
         {
             appContext = context;
             dbSet = context.Set<TEntity>();
-        }
-        public BaseRepository()
-        {
-
-        }
+        }       
 
         public virtual void Delete(TEntity entityToDelete)
-        {
-            if (entityToDelete == null)
-            {
-                throw new ArgumentException("Cannot add a null entity.");
-            }
-            if (appContext.Entry(entityToDelete).State == EntityState.Detached)
-            {
-                dbSet.Attach(entityToDelete);
-            }
+        {   
             dbSet.Remove(entityToDelete);
         }
 
@@ -56,14 +44,20 @@ namespace Banks.DataAccess
             await appContext.SaveChangesAsync();
         }
 
-        public IEnumerable<TEntity> Get()
+        public IEnumerable<TEntity> GetAll()
         {
             return dbSet.AsNoTracking();
         }
 
-        public IEnumerable<TEntity> Get(Func<TEntity, bool> predicate)
+        public IEnumerable<TEntity> GetAll(Func<TEntity, bool> predicate)
         {
             return dbSet.AsNoTracking().Where(predicate);
+        }
+
+        public void Dispose()
+        {
+                appContext.Dispose();
+                appContext = null;          
         }
     }
 }
