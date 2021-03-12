@@ -57,7 +57,6 @@ namespace Banks.DataAccess
         public void Dispose()
         {
                 appContext.Dispose();
-                appContext = null;          
         }
     }
 }

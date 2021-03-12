@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Banks.DataAccess
 {
-    public interface IBaseRepository<TEntity>
+    public interface IBaseRepository<TEntity> : IDisposable
          where TEntity : BaseEntity
     {
         IEnumerable<TEntity> GetAll();
