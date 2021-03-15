@@ -5,7 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Banks.DataAccess\Banks.DataAccess.csproj" />
+    <ProjectReference Include="..\Banks.Entities\Banks.Entities.csproj" />
+    <ProjectReference Include="..\Banks.ViewModels\Banks.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

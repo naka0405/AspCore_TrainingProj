@@ -1,5 +1,6 @@
 ﻿using Banks.Entities.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 namespace Banks.DataAccess
 {
     public class BaseRepository<TEntity> : IBaseRepository<TEntity>, IDisposable
-        where TEntity:BaseEntity
+        where TEntity : BaseEntity
     {
         protected ApplicationContext appContext;
         protected DbSet<TEntity> dbSet;
@@ -17,11 +18,11 @@ namespace Banks.DataAccess
         {
             appContext = context;
             dbSet = context.Set<TEntity>();
-        }       
+        }
 
-        public virtual void Delete(TEntity entityToDelete)
-        {   
-            dbSet.Remove(entityToDelete);
+        public virtual EntityEntry<TEntity> Delete(TEntity entityToDelete)
+        {
+            return dbSet.Remove(entityToDelete);
         }
 
         public virtual async Task<TEntity> GetById(int id)
@@ -29,9 +30,9 @@ namespace Banks.DataAccess
             return await dbSet.FindAsync(id);
         }
 
-        public virtual void Insert(TEntity entity)
+        public virtual EntityEntry<TEntity> Insert(TEntity entity)
         {
-            dbSet.Add(entity);
+            return dbSet.Add(entity);
         }
 
         public void Update(TEntity entityToUpdate)
@@ -39,9 +40,9 @@ namespace Banks.DataAccess
             appContext.Entry(entityToUpdate).State = EntityState.Modified;
         }
 
-        public async Task SaveChanges()
+        public async Task<int> SaveChanges()
         {
-            await appContext.SaveChangesAsync();
+            return await appContext.SaveChangesAsync();
         }
 
         public IEnumerable<TEntity> GetAll()
@@ -56,7 +57,7 @@ namespace Banks.DataAccess
 
         public void Dispose()
         {
-                appContext.Dispose();
+            appContext.Dispose();
         }
     }
 }

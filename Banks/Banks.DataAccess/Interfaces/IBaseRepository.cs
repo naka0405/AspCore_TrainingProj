@@ -1,4 +1,5 @@
 ﻿using Banks.Entities.Entities;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,10 @@ namespace Banks.DataAccess
     {
         IEnumerable<TEntity> GetAll();
         IEnumerable<TEntity> GetAll(Func<TEntity, bool> predicate);
-        void Delete(TEntity item);
+        EntityEntry<TEntity> Delete(TEntity item);
         Task<TEntity> GetById(int id);
-        void Insert(TEntity entity);
+        EntityEntry<TEntity> Insert(TEntity entity);
         void Update(TEntity entityToUpdate);
-        Task SaveChanges();
+        Task<int> SaveChanges();
     }
 }

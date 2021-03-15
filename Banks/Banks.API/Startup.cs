@@ -1,4 +1,6 @@
 using Arch.EntityFrameworkCore;
+using AutoMapper;
+using Banks.API.AutoMapper;
 using Banks.DataAccess;
 using Banks.Entities.Entities;
 using Microsoft.AspNetCore.Builder;
@@ -30,6 +32,13 @@ namespace Banks.Api
                 .AddEntityFrameworkStores<ApplicationContext>();
             services.AddAuthentication();
             services.AddControllers();
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MapperModule());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
