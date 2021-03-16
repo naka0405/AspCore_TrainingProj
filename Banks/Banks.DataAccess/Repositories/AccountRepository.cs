@@ -5,37 +5,39 @@ using System.Collections.Generic;
 using System;
 using Banks.Entities.Enums;
 using Banks.DataAccess.Interfaces;
+using System.Threading.Tasks;
+using System.Linq.Expressions;
 
 namespace Banks.DataAccess.Repositories
 {
-    public class AccountRepository:BaseRepository<Account>, IAccountRepository
+    public class AccountRepository: BaseRepository<Account>, IAccountRepository
     {
         public AccountRepository(ApplicationContext context):base(context)
         { }
 
-        public IEnumerable<Account>GetByClientCode(string code)
+        public async Task<IEnumerable<Account>>GetByClientCode(string code)
         {
-            return this.appContext.Accounts.Include(x => x.Client).Where(x => x.Client.Code == code);
+            return await this.appContext.Accounts.Include(x => x.Client).Where(x => x.Client.Code == code).ToListAsync();
         }
 
-        public IEnumerable<Account>GetByCurrency(Currencies currency)
+        public async Task<IEnumerable<Account>>GetByCurrency(Currencies currency)
         {
-            return this.appContext.Accounts.Where(x => x.Currency == currency);
+            return await this.appContext.Accounts.Where(x => x.Currency == currency).ToListAsync();
         }
 
-        public new Account GetById(int id)
+        public override async Task<Account> GetById(int id)
         {
-            return this.appContext.Accounts.Include(x => x.Client).FirstOrDefault(x => x.Id == id);
+            return await this.appContext.Accounts.Include(x => x.Client).FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public new IEnumerable<Account>GetAll()
+        public override async Task<IEnumerable<Account>>GetAll()
         {
-            return this.appContext.Accounts.Include(x => x.Client);
+            return await this.appContext.Accounts.Include(x => x.Client).ToListAsync();
         }
 
-        public new IEnumerable<Account> GetAll(Func<Account,bool> predicate)
+        public override async Task<IEnumerable<Account>> GetAll(Expression<Func<Account,bool>> predicate)
         {
-            return this.appContext.Accounts.Include(x => x.Client).ThenInclude(x=>x.Bank);
+            return await this.appContext.Accounts.Include(x => x.Client).ThenInclude(x=>x.Bank).ToListAsync();
         }
 
     }

@@ -2,23 +2,20 @@
 using Banks.BusinessLogic.Interfaces;
 using Banks.DataAccess;
 using Banks.Entities.Entities;
-using Banks.ViewModels.Enums;
 using Banks.ViewModels.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Banks.BusinessLogic.Services
 {
-    public class BaseService<TEntity, TView> : IBaseService<TView>
+    public class BaseService<TEntity, TView, C> : IBaseService<TView, C>
         where TEntity : BaseEntity
-        where TView : BaseViewModel
+        where TView : BaseViewModel, new() 
+        where C:CollectionBaseVM<TView>, new()
     {
-        private readonly IBaseRepository<TEntity> repository;
-        private readonly IMapper mapper;
+        protected readonly IBaseRepository<TEntity> repository;
+        protected readonly IMapper mapper;
 
         public BaseService(IBaseRepository<TEntity> repository, IMapper mapper)
         {
@@ -33,58 +30,78 @@ namespace Banks.BusinessLogic.Services
             return entity != null ? mapper.Map<TView>(entity) : null;
         }
 
-        public List<TView> GetAll()
+        public C GetAll()
         {
-            var entities = repository.GetAll().ToList();
-            return mapper.Map<List<TView>>(entities);
+            var entities = repository.GetAll();
+            if (entities==null)
+            {
+                return new C();
+            }           
+            CollectionBaseVM<TView> collectionVM = new C();
+            collectionVM.Collection = mapper.Map<List<TView>>(entities);
+            return (C)collectionVM;
         }
 
-        public List<TView> GetAll(TView conditions)
+        public C GetAll(TView conditions)
         {
-            var mappedPredicate = mapper.Map<TEntity>(conditions);
-            var entities = repository.GetAll(x => x.Id == mappedPredicate.Id);
-            return entities != null ? mapper.Map<List<TView>>(entities).ToList() : null;
+            var mappedConditions = mapper.Map<TEntity>(conditions);
+            var entities = repository.GetAll(x => x.Id == mappedConditions.Id);
+            if(entities==null)
+            {
+                return new C();
+            }
+            CollectionBaseVM<TView> collectionVM = new C();
+            collectionVM.Collection = mapper.Map<List<TView>>(entities);
+            return (C)collectionVM;
         }
 
-        public async Task<bool> Delete(TView model)
+        public async Task Delete(TView model)
         {
             var entityForDelete = await repository.GetById(model.Id);
             if (entityForDelete == null)
             {
-                return false;
+                throw new ArgumentException("Cannot get null entity.");
             }
-            if (repository.Delete(entityForDelete) == null)
+            try
             {
-                return false;
+                repository.Delete(entityForDelete);
             }
-            await repository.SaveChanges();
-            return true;
+            catch
+            {
+                throw new ArgumentException("Something went wrong!");
+            }
+            await repository.SaveChanges();            
         }
 
        
-        public async Task<SaveResults> Save(TView model)
+        public async Task Create(TView model)
         {
             var entity = mapper.Map<TEntity>(model);
-            var entry = repository.Insert(entity);
-            if (entry != null)
+            try 
             {
-                await repository.SaveChanges();
-                return SaveResults.Ok;
+                await repository.Insert(entity);
             }
-            return SaveResults.ServerError;
+            catch
+            {
+                throw new ArgumentException("Something went wrong!");
+            }            
+            await repository.SaveChanges();
         }
 
-        public async Task<SaveResults> Update(TView model)
+        public async Task Update(TView model)
         {
             var dataForUpdate = mapper.Map<TEntity>(model);
-            repository.Update(dataForUpdate);
-            var result= await repository.SaveChanges();
-            if(result>0)
+            try
             {
-                return SaveResults.Ok;
+                repository.Update(dataForUpdate);
             }
-            return SaveResults.ServerError;
+            catch
+            {
+                throw new ArgumentException("Something went wrong!");
+            }            
+            await repository.SaveChanges();
         }
+
         public void Dispose()
         {
             if (repository == null)

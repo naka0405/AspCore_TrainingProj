@@ -1,19 +1,18 @@
-﻿using Banks.ViewModels.Enums;
-using Banks.ViewModels.Models;
+﻿using Banks.ViewModels.Models;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Banks.BusinessLogic.Interfaces
 {
-    public interface IBaseService<TView> : IDisposable
-        where TView : BaseViewModel
+    public interface IBaseService<TView,C> : IDisposable
+        where TView : BaseViewModel, new()
+        where C:CollectionBaseVM<TView>, new()
     {
         Task<TView> GetById(int id);
-        List<TView> GetAll();
-        List<TView> GetAll(TView conditions);
-        Task<bool> Delete(TView model);
-        Task<SaveResults> Save(TView model);
-        Task<SaveResults> Update(TView model);
+        C GetAll();
+        C GetAll(TView conditions);
+        Task Delete(TView model);
+        Task Create(TView model);
+        Task Update(TView model);
     }
 }

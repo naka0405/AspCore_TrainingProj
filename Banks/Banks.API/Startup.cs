@@ -1,7 +1,8 @@
-using Arch.EntityFrameworkCore;
 using AutoMapper;
 using Banks.API.AutoMapper;
 using Banks.DataAccess;
+using Banks.BusinessLogic.Services;
+using Banks.DataAccess.Interfaces;
 using Banks.Entities.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,6 +11,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Banks.DataAccess.Repositories;
+using Banks.BusinessLogic.Interfaces;
 
 namespace Banks.Api
 {
@@ -34,11 +37,14 @@ namespace Banks.Api
             services.AddControllers();
             var mappingConfig = new MapperConfiguration(mc =>
             {
-                mc.AddProfile(new MapperModule());
+                mc.AddProfile(new MapperProfile());
             });
 
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
+            services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+            services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IAccountRepository, AccountRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

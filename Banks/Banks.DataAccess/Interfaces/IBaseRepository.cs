@@ -12,12 +12,12 @@ namespace Banks.DataAccess
     public interface IBaseRepository<TEntity> : IDisposable
          where TEntity : BaseEntity
     {
-        IEnumerable<TEntity> GetAll();
-        IEnumerable<TEntity> GetAll(Func<TEntity, bool> predicate);
-        EntityEntry<TEntity> Delete(TEntity item);
+        Task<IEnumerable<TEntity>> GetAll();
+        Task<IEnumerable<TEntity>> GetAll(Expression<Func<TEntity, bool>> predicate);
+        void Delete(TEntity item);
         Task<TEntity> GetById(int id);
-        EntityEntry<TEntity> Insert(TEntity entity);
+        Task Insert(TEntity entity);
         void Update(TEntity entityToUpdate);
-        Task<int> SaveChanges();
+        Task SaveChanges();
     }
 }
