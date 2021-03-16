@@ -15,24 +15,24 @@ namespace Banks.DataAccess.Repositories
         public AccountRepository(ApplicationContext context):base(context)
         { }
 
-        public async Task<IEnumerable<Account>>GetByClientCode(string code)
+        public async Task<IEnumerable<Account>>GetByClientCode(int bankId, string code)
         {
-            return await this.appContext.Accounts.Include(x => x.Client).Where(x => x.Client.Code == code).ToListAsync();
+            return await this.appContext.Accounts.Include(x => x.Client).ThenInclude(x => x.Bank).Where(x => x.Client.Code == code).ToListAsync();
         }
 
-        public async Task<IEnumerable<Account>>GetByCurrency(Currencies currency)
+        public async Task<IEnumerable<Account>>GetByCurrency(int bankId, Currencies currency)
         {
-            return await this.appContext.Accounts.Where(x => x.Currency == currency).ToListAsync();
+            return await this.appContext.Accounts.Include(x => x.Client).ThenInclude(x => x.Bank).Where(x => x.Client.BankId==bankId && x.Currency == currency).ToListAsync();
         }
 
         public override async Task<Account> GetById(int id)
         {
-            return await this.appContext.Accounts.Include(x => x.Client).FirstOrDefaultAsync(x => x.Id == id);
+            return await this.appContext.Accounts.Include(x => x.Client).ThenInclude(x=>x.Bank).FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public override async Task<IEnumerable<Account>>GetAll()
         {
-            return await this.appContext.Accounts.Include(x => x.Client).ToListAsync();
+            return await this.appContext.Accounts.Include(x => x.Client).ThenInclude(x => x.Bank).ToListAsync();
         }
 
         public override async Task<IEnumerable<Account>> GetAll(Expression<Func<Account,bool>> predicate)

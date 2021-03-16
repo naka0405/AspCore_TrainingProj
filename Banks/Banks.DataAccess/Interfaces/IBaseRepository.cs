@@ -18,6 +18,6 @@ namespace Banks.DataAccess
         Task<TEntity> GetById(int id);
         Task Insert(TEntity entity);
         void Update(TEntity entityToUpdate);
-        Task SaveChanges();
+        Task<int> SaveChanges();
     }
 }

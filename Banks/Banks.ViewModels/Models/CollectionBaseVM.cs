@@ -11,6 +11,12 @@ namespace Banks.ViewModels.Models
         {
             Collection = new List <TView>();
             Count = Collection.Count;
-        }       
+        }
+
+        public CollectionBaseVM(List<TView> collection)
+        {
+            Collection = collection;
+            Count = Collection.Count;
+        }
     }
 }

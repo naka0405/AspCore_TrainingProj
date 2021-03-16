@@ -7,7 +7,7 @@ namespace Banks.DataAccess.Interfaces
 {
     public interface IAccountRepository:IBaseRepository<Account>
     {
-        Task<IEnumerable<Account>> GetByClientCode(string code);
-        Task<IEnumerable<Account>> GetByCurrency(Currencies currency);
+        Task<IEnumerable<Account>> GetByClientCode(int bankId, string code);
+        Task<IEnumerable<Account>> GetByCurrency(int bankId, Currencies currency);
     }
 }

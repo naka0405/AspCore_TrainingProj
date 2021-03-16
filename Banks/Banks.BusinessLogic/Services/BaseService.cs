@@ -23,14 +23,14 @@ namespace Banks.BusinessLogic.Services
             this.mapper = mapper;
         }
 
-        public async Task<TView> GetById(int id)
+        public virtual async Task<TView> GetById(int id)
         {
             TEntity entity = await repository.GetById(id);
 
             return entity != null ? mapper.Map<TView>(entity) : null;
         }
 
-        public C GetAll()
+        public virtual C GetAll()
         {
             var entities = repository.GetAll();
             if (entities==null)
@@ -42,7 +42,7 @@ namespace Banks.BusinessLogic.Services
             return (C)collectionVM;
         }
 
-        public C GetAll(TView conditions)
+        public virtual C GetAll(TView conditions)
         {
             var mappedConditions = mapper.Map<TEntity>(conditions);
             var entities = repository.GetAll(x => x.Id == mappedConditions.Id);
@@ -55,7 +55,7 @@ namespace Banks.BusinessLogic.Services
             return (C)collectionVM;
         }
 
-        public async Task Delete(TView model)
+        public virtual async Task Delete(TView model)
         {
             var entityForDelete = await repository.GetById(model.Id);
             if (entityForDelete == null)
@@ -74,7 +74,7 @@ namespace Banks.BusinessLogic.Services
         }
 
        
-        public async Task Create(TView model)
+        public virtual async Task<int> Create(TView model)
         {
             var entity = mapper.Map<TEntity>(model);
             try 
@@ -84,11 +84,11 @@ namespace Banks.BusinessLogic.Services
             catch
             {
                 throw new ArgumentException("Something went wrong!");
-            }            
-            await repository.SaveChanges();
+            }   
+            return await repository.SaveChanges();
         }
 
-        public async Task Update(TView model)
+        public virtual async Task Update(TView model)
         {
             var dataForUpdate = mapper.Map<TEntity>(model);
             try

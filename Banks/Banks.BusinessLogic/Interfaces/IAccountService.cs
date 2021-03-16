@@ -1,10 +1,12 @@
 ﻿using Banks.ViewModels.Models;
+using System.Threading.Tasks;
 
 namespace Banks.BusinessLogic.Interfaces
 {
     public interface IAccountService:IBaseService<BaseViewModel,CollectionBaseVM<BaseViewModel>>
     {
-        CollectionBaseVM<BaseViewModel> GetClientAccountsByCode(CodeVM model);
-        CollectionBaseVM<BaseViewModel> GetAccountsByCurrency(CurrencyVM model);
+        Task<CollectionBaseVM<AccountVM>> GetClientAccountsByCode(CodeVM model);
+        Task<CollectionBaseVM<AccountVM>> GetAccountsByCurrency(CurrencyVM model);
+
     }
 }

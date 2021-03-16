@@ -12,7 +12,7 @@ namespace Banks.BusinessLogic.Interfaces
         C GetAll();
         C GetAll(TView conditions);
         Task Delete(TView model);
-        Task Create(TView model);
+        Task<int> Create(TView model);
         Task Update(TView model);
     }
 }

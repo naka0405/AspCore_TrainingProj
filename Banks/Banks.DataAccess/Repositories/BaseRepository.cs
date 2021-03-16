@@ -41,9 +41,9 @@ namespace Banks.DataAccess
             appContext.Entry(entityToUpdate).State = EntityState.Modified;
         }
 
-        public async Task SaveChanges()
+        public async Task<int> SaveChanges()
         {
-            await appContext.SaveChangesAsync();
+           return await appContext.SaveChangesAsync();
         }
 
         public virtual async Task<IEnumerable<TEntity>> GetAll()
