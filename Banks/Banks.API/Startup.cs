@@ -54,7 +54,8 @@ namespace Banks.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -65,6 +66,9 @@ namespace Banks.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+             name: "defaultApi",
+                   pattern: "api/{controller=AccountApi}/{action=Index}/{id?}");                
             });
         }
     }

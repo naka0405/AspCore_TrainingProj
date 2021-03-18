@@ -5,7 +5,10 @@ using System.Text;
 
 namespace Banks.ViewModels.Models
 {
-    public class CurrencyVM
+    /// <summary>       
+    /// viewModel for select accounts by currency      
+    /// </summary>
+    public class GetAllByCurrencyAccountViewModel
     {
         public int BankId { get; set; }
         public Currencies Currency { get; set; }

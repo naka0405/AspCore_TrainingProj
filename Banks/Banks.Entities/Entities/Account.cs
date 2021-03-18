@@ -5,6 +5,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Banks.Entities
 {
+    /// <summary>       
+    /// define account entity which has navigation property Client as one   
+    /// </summary>
     public class Account:BaseEntity
     {
         [Required]

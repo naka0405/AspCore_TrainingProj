@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Banks.ViewModels.Models
 {
+    /// <summary>       
+    /// viewModel for inheritance with general property      
+    /// </summary>
     public class BaseViewModel
     {
         public int Id { get; set; }

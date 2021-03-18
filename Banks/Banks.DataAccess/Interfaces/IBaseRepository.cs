@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace Banks.DataAccess
 {
+    /// <summary>       
+    /// Consist general crud methods to work with entities in Db
+    /// </summary>
     public interface IBaseRepository<TEntity> : IDisposable
          where TEntity : BaseEntity
     {
@@ -18,6 +21,6 @@ namespace Banks.DataAccess
         Task<TEntity> GetById(int id);
         Task Insert(TEntity entity);
         void Update(TEntity entityToUpdate);
-        Task<int> SaveChanges();
+        Task SaveChanges();
     }
 }

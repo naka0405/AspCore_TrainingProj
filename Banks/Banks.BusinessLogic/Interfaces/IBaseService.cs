@@ -1,18 +1,19 @@
-﻿using Banks.ViewModels.Models;
+﻿using Banks.Entities.Entities;
+using Banks.ViewModels.Models;
 using System;
 using System.Threading.Tasks;
 
 namespace Banks.BusinessLogic.Interfaces
 {
-    public interface IBaseService<TView,C> : IDisposable
-        where TView : BaseViewModel, new()
-        where C:CollectionBaseVM<TView>, new()
+    /// <summary>       
+    /// Consist general methods to manipulate entities
+    /// </summary>
+    public interface IBaseService<TEntity> : IDisposable
+        where TEntity : BaseEntity, new()        
     {
-        Task<TView> GetById(int id);
-        C GetAll();
-        C GetAll(TView conditions);
-        Task Delete(TView model);
-        Task<int> Create(TView model);
-        Task Update(TView model);
+        Task<TView> GetById<TView>(int id) where TView:BaseViewModel;
+        Task Delete<TView>(TView model) where TView : BaseViewModel;
+        Task<int> Create<TView>(TView model) where TView : BaseViewModel;
+        Task Update<TView>(TView model) where TView : BaseViewModel;
     }
 }
