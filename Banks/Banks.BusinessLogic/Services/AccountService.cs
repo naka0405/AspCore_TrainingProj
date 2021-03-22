@@ -3,6 +3,7 @@ using Banks.BusinessLogic.Interfaces;
 using Banks.DataAccess.Interfaces;
 using Banks.Entities;
 using Banks.ViewModels.ViewModels.Account;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,13 +17,16 @@ namespace Banks.BusinessLogic.Services
     public class AccountService:BaseService<Account>, IAccountService        
     {
         private readonly IAccountRepository accountRepo;
+        /// <summary>
+        /// Has repository and mapper injection.
+        /// </summary>       
         public AccountService(IAccountRepository repository, IMapper mapper):base(repository, mapper)
         {
             accountRepo = repository;            
         }
 
         /// <summary>       
-        /// get accounts using protected GetAll() from baseService and selected by search parameters
+        /// get accounts using search parameter integer code of currency
         /// </summary>
         public async Task<GetAllAccountViewModel> GetByCurrency(int bankId, int currencyCode)
         {
@@ -33,7 +37,7 @@ namespace Banks.BusinessLogic.Services
             {
                 collectionViewModel.Items = selectedItems;               
             }            
-            return await Task.FromResult(collectionViewModel);
+            return collectionViewModel;
         }
 
         /// <summary>       
@@ -47,7 +51,7 @@ namespace Banks.BusinessLogic.Services
             {  
                 collectionViewModel.Items = this.mapper.Map<List<AccountGetAllAccountViewModelItem>>(accounts);
             }           
-           return await Task.FromResult(collectionViewModel);
+           return collectionViewModel;
         }
 
         /// <summary>       
@@ -55,7 +59,11 @@ namespace Banks.BusinessLogic.Services
         /// </summary>
         public async Task Update(UpdateAccountViewModel model)
         {           
-            var entity =  this.repository.GetById(model.Id).Result;
+            var entity = await this.repository.GetById(model.Id);
+            if (entity == null)
+            {
+                throw new ArgumentException("Such entity not found!");
+            }
             var dataForUpdate = mapper.Map<UpdateAccountViewModel, Account>(model,entity);
             repository.Update(dataForUpdate);
             await repository.SaveChanges();

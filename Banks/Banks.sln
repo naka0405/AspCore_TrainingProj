@@ -14,7 +14,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Banks.BusinessLogic", "Bank
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Banks.Entities", "Banks.Entities\Banks.Entities.csproj", "{11A87BC0-9B9F-4E58-8409-78551ACD124C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banks.ViewModels", "Banks.ViewModels\Banks.ViewModels.csproj", "{D4BA8FDF-1551-413C-8059-91EC1B2D26E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Banks.ViewModels", "Banks.ViewModels\Banks.ViewModels.csproj", "{D4BA8FDF-1551-413C-8059-91EC1B2D26E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banks.BusinessLogicTests", "Banks.BusinessLogicTests\Banks.BusinessLogicTests.csproj", "{AFECB77E-B43D-4FB4-ACE8-886472075884}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +44,10 @@ Global
 		{D4BA8FDF-1551-413C-8059-91EC1B2D26E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4BA8FDF-1551-413C-8059-91EC1B2D26E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4BA8FDF-1551-413C-8059-91EC1B2D26E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFECB77E-B43D-4FB4-ACE8-886472075884}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFECB77E-B43D-4FB4-ACE8-886472075884}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFECB77E-B43D-4FB4-ACE8-886472075884}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFECB77E-B43D-4FB4-ACE8-886472075884}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

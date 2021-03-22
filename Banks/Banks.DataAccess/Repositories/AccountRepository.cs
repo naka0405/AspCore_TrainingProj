@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Banks.DataAccess.Repositories
 {
     /// <summary>       
-    /// implement baseRepository and consist another convinient method for work with accountEntity in Db 
+    /// Implement baseRepository and consist another convinient method for work with accountEntity in Db. 
     /// </summary>
     public class AccountRepository: BaseRepository<Account>, IAccountRepository
     {
@@ -18,7 +18,7 @@ namespace Banks.DataAccess.Repositories
         { }
 
         /// <summary>       
-        /// Get all accounts from db by specific bankId, clientCode        
+        /// Get all accounts from db by specific bankId, clientCode.        
         /// </summary>
         public async Task<IEnumerable<Account>>GetByClientCode(int bankId, string code)
         {           
@@ -30,7 +30,7 @@ namespace Banks.DataAccess.Repositories
         }
 
         /// <summary>       
-        /// Get account from db by Id       
+        /// Get account from db by Id.       
         /// </summary>
         public override async Task<Account> GetById(int id)
         {
@@ -38,7 +38,7 @@ namespace Banks.DataAccess.Repositories
         }
 
         /// <summary>       
-        /// Get all accounts from db including Client and Bank entity for everyone        
+        /// Get all accounts from db including Client and Bank entity for everyone.        
         /// </summary>
         public override async Task<IEnumerable<Account>>GetAll()
         {
@@ -46,7 +46,7 @@ namespace Banks.DataAccess.Repositories
         }
 
         /// <summary>       
-        /// Get all accounts from db by specific predicate        
+        /// Get all accounts from db by specific predicate.        
         /// </summary>
         public override async Task<IEnumerable<Account>> GetAll(Expression<Func<Account,bool>> predicate)
         {

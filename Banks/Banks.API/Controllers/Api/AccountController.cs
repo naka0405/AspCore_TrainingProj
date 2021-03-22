@@ -1,7 +1,5 @@
 ﻿using Banks.BusinessLogic.Interfaces;
-using Banks.Entities.Enums;
 using Banks.ViewModels.Enums;
-using Banks.ViewModels.Models;
 using Banks.ViewModels.ViewModels;
 using Banks.ViewModels.ViewModels.Account;
 using Microsoft.AspNetCore.Mvc;
@@ -25,8 +23,11 @@ namespace Banks.API.Controllers
         }
 
         /// <summary>       
-        /// Get all accounts by bankId, clientCode
+        /// Get all accounts.
         /// </summary>
+        /// <param name="bankId">A integer precision number.</param>
+        /// <param name="clientCode">A string clientCode.</param>
+
 
         [HttpGet]
         public async Task<IActionResult> GetAllByCode([FromQuery] int bankId, string clientCode)
@@ -47,8 +48,9 @@ namespace Banks.API.Controllers
         }
 
         /// <summary>       
-        /// Get all accounts by bankId, int currencyCode
+        /// Get all accounts by bankId, int currencyCode.
         /// </summary>
+        /// <param name="currencyCode">A integer precision number, which matchs to enum.</param>
         [HttpGet]
         public async Task<IActionResult> GetAllByCurrency([FromQuery] int bankId, int currencyCode)
         {
@@ -68,7 +70,7 @@ namespace Banks.API.Controllers
         }
 
         /// <summary>       
-        /// Get account by Id
+        /// Get account by Id.
         /// </summary>
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
@@ -89,7 +91,7 @@ namespace Banks.API.Controllers
         }
 
         /// <summary>       
-        /// Create new account for client
+        /// Create new account for client.
         /// </summary>
         [HttpPost]
         public async Task<IActionResult> Create(CreateAccountViewModel model)
@@ -102,9 +104,8 @@ namespace Banks.API.Controllers
                 }
                 var newId = await accountService.Create(model);
                 if (newId > 0)
-                {
-                    model.Id = newId;
-                    return Ok(model);
+                {                   
+                    return Ok(newId);
                 }
                 return BadRequest(new BadRequestViewModel(ErrorCodes.ServerError));
             }
@@ -115,7 +116,7 @@ namespace Banks.API.Controllers
         }
 
         /// <summary>       
-        /// Update number, currency for account
+        /// Update number, currency for account.
         /// </summary>
         [HttpPut]
         public async Task<IActionResult> Update(UpdateAccountViewModel model)
@@ -136,10 +137,10 @@ namespace Banks.API.Controllers
         }
 
         /// <summary>       
-        /// Delete some account
+        /// Delete some account.
         /// </summary>
         [HttpDelete]
-        public async Task<IActionResult> Delete(DeleteAccountViewModel model)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
@@ -147,7 +148,7 @@ namespace Banks.API.Controllers
                 {
                     return BadRequest("Invalid input!");
                 }
-                await accountService.Delete(model);
+                await accountService.Delete(id);
                 return Ok();
             }
             catch (Exception ex)

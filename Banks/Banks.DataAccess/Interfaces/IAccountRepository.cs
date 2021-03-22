@@ -5,10 +5,13 @@ using System.Threading.Tasks;
 namespace Banks.DataAccess.Interfaces
 {
     /// <summary>       
-    /// add specific capabilities to manipulate accountEntity 
+    /// Add specific capabilities to manipulate accountEntity.
     /// </summary>
     public interface IAccountRepository:IBaseRepository<Account>
     {
+        /// <summary>
+        /// Get all accounts from db by specific clientCode.
+        /// </summary>      
         Task<IEnumerable<Account>> GetByClientCode(int bankId, string code);       
     }
 }

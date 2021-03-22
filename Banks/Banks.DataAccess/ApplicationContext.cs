@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Banks.DataAccess
 {
     /// <summary>       
-    /// determines the content and configure context,         
+    /// Determines the content and configure context.        
     /// </summary>
     public class ApplicationContext : IdentityDbContext<User>
     {
@@ -22,7 +22,7 @@ namespace Banks.DataAccess
         }
 
         // <summary>       
-        ///  method which defines relationships between tables  and fills the base with primary values      
+        ///  Method which defines relationships between tables  and fills the base with primary values.      
         /// </summary>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

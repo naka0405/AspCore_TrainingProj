@@ -1,16 +1,19 @@
 ﻿using Banks.ViewModels.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Banks.ViewModels.ViewModels.Account
 {
     /// <summary>       
-    /// viewModel for set new datas and update
+    /// ViewModel for set new datas and update.
     /// </summary>
     public class UpdateAccountViewModel:BaseViewModel
     {
+        /// <summary>
+        /// Gets or sets number of account.
+        /// </summary>
         public string Number { get; set; }
+        /// <summary>
+        /// Gets or sets kind of currency in integer format matches to enum.
+        /// </summary>
         public int Currency { get; set; }
     }
 }

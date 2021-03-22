@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Banks.DataAccess
 {
     /// <summary>       
-    /// Provides general methods for work with entities from db         
+    /// Provides general methods for work with entities from db.         
     /// </summary>
     public class BaseRepository<TEntity> : IBaseRepository<TEntity>, IDisposable
         where TEntity : BaseEntity
@@ -24,7 +24,7 @@ namespace Banks.DataAccess
         }
 
         /// <summary>       
-        /// Remove entity       
+        /// Remove entity.       
         /// </summary>
         public virtual void Delete(TEntity entityToDelete)
         {
@@ -32,7 +32,7 @@ namespace Banks.DataAccess
         }
 
         /// <summary>       
-        /// Get entity by id       
+        /// Get entity by id.       
         /// </summary>
         public virtual async Task<TEntity> GetById(int id)
         {
@@ -40,15 +40,15 @@ namespace Banks.DataAccess
         }
 
         /// <summary>       
-        /// Insert entity to table        
+        /// Insert entity to table.        
         /// </summary>
         public virtual async Task Insert(TEntity entity)
         {
-           var entryEntity=await dbSet.AddAsync(entity);          
+           await dbSet.AddAsync(entity);          
         }
 
         /// <summary>       
-        /// Update entity in Db        
+        /// Update entity in Db.        
         /// </summary>
         public void Update(TEntity entityToUpdate)
         {
@@ -56,7 +56,7 @@ namespace Banks.DataAccess
         }
 
         /// <summary>       
-        /// Save changes in this context to the Db
+        /// Save changes in this context to the Db.
         /// </summary>
         public async Task SaveChanges()
         {
@@ -64,7 +64,7 @@ namespace Banks.DataAccess
         }
 
         /// <summary>       
-        /// Get all records from Db table       
+        /// Get all records from Db table.       
         /// </summary>
         public virtual async Task<IEnumerable<TEntity>> GetAll()
         {
@@ -72,7 +72,7 @@ namespace Banks.DataAccess
         }
 
         /// <summary>       
-        /// Get all records from Db table by predicate        
+        /// Get all records from Db table by predicate.        
         /// </summary>
         public virtual async Task<IEnumerable<TEntity>> GetAll(Expression<Func<TEntity, bool>> predicate)
         {

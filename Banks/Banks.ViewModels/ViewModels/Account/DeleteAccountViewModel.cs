@@ -3,11 +3,17 @@
 namespace Banks.ViewModels.ViewModels.Account
 {
     /// <summary>       
-    /// viewModel to delete some account        
+    /// ViewModel to delete some account.        
     /// </summary>
     public class DeleteAccountViewModel:BaseViewModel
     {
+        /// <summary>
+        /// 
+        /// </summary>
        public string Number { get; set; }
+        /// <summary>
+       /// 
+       /// </summary>
        public int BankId { get; set; }
     }
 }

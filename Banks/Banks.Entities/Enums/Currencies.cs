@@ -1,7 +1,7 @@
 ﻿namespace Banks.Entities.Enums
 {
     /// <summary>       
-    /// kinds of currencies for work with accounts        
+    /// Kinds of currencies for work with accounts.       
     /// </summary>
     public enum Currencies
     {

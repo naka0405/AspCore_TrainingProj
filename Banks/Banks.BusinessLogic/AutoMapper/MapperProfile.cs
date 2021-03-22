@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
 using Banks.Entities;
-using Banks.ViewModels.Models;
 using Banks.ViewModels.ViewModels.Account;
 
 namespace Banks.API.AutoMapper
 {
     /// <summary>       
-    /// Configuring mapper on some classes
+    /// Configuring mapper on some classes.
     /// </summary>
     public class MapperProfile : Profile
     {
@@ -20,14 +19,12 @@ namespace Banks.API.AutoMapper
             .ForMember(x => x.Code, opt => opt
               .MapFrom(src => src.Client.Code))
             .ForMember(x => x.Account, opt => opt
-              .MapFrom(src => src.Number))
-                .ReverseMap();
+              .MapFrom(src => src.Number));
 
             CreateMap<CreateAccountViewModel, Account>()
                 .ForMember(x => x.Number, opt => opt.MapFrom(src => src.Account))
-                .ForMember(x => (int)x.Currency, opt => opt.MapFrom(src => src.CurrencyCode))
-                .ReverseMap();
-
+                .ForMember(x => (int)x.Currency, opt => opt.MapFrom(src => src.CurrencyCode));
+             
             CreateMap<DeleteAccountViewModel, Account>();
 
             CreateMap<Account, GetByIdAccountViewModel>()
