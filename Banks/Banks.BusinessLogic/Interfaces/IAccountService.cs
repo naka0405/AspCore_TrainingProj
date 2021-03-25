@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 namespace Banks.BusinessLogic.Interfaces
 {
     /// <summary>       
-    /// Add for Account some specific methods.
+    /// An interface which contains methods to work with aacount entity.
     /// </summary>
     public interface IAccountService:IBaseService<Account>
     {   
@@ -18,7 +18,5 @@ namespace Banks.BusinessLogic.Interfaces
         /// Get async accounts with specified currencyCode.
         /// </summary>       
         Task<GetAllAccountViewModel> GetByCurrency(int bankId, int currencyCode);
-
-
     }
 }

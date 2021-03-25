@@ -55,8 +55,9 @@ namespace Banks.BusinessLogic.Services
         }
 
         /// <summary>       
-        /// Update entity from Db getting datas from UI
+        /// Update entity from Db getting datas from UI.
         /// </summary>
+        /// <param name="model">Consists new values of entity properties.</param>        
         public async Task Update(UpdateAccountViewModel model)
         {           
             var entity = await this.repository.GetById(model.Id);

@@ -15,11 +15,13 @@ namespace Banks.Entities
         /// </summary>
         [Required]
         public string FirstName { get; set; }
+
         /// <summary>
         /// Gets or sets client last name.
         /// </summary>
         [Required]
         public string LastName { get; set; }
+
         /// <summary>
         /// Gets or sets string client identification code.
         /// </summary>
@@ -27,25 +29,30 @@ namespace Banks.Entities
         [MinLength(10)]
         [MaxLength(10)]
         public string Code { get; set; }
+
         /// <summary>
         /// Gets or sets bank id from linked table.
         /// </summary>
         public int BankId { get; set; }
+
         /// <summary>
         /// Gets or sets novigation property bank.
         /// </summary>
         [ForeignKey("BankId")]
         public virtual Bank Bank {get;set;}
+
         /// <summary>
         /// Gets or sets user id from linked table.
         /// </summary>
         [Required]
         public string UserId { get; set; }
+
         /// <summary>
         /// Gets or sets novigation property user.
         /// </summary>
         [ForeignKey("UserId")]
         public virtual User User { get; set; }
+
         /// <summary>
         /// Gets or sets collection of accounts.
         /// </summary>

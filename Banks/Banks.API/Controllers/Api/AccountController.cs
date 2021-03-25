@@ -2,8 +2,11 @@
 using Banks.ViewModels.Enums;
 using Banks.ViewModels.ViewModels;
 using Banks.ViewModels.ViewModels.Account;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Banks.API.Controllers
@@ -14,6 +17,7 @@ namespace Banks.API.Controllers
     /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize]
     public class AccountController : ControllerBase
     {
         private readonly IAccountService accountService;
@@ -22,8 +26,18 @@ namespace Banks.API.Controllers
             accountService = service;
         }
 
+        [HttpGet]
+        [Authorize]
+        public async Task<IEnumerable<string>> Get()
+        {
+
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+
+            return new string[] { accessToken };
+        }
+
         /// <summary>       
-        /// Get all accounts.
+        /// Get all accounts by identification code of client.
         /// </summary>
         /// <param name="bankId">A integer precision number.</param>
         /// <param name="clientCode">A string clientCode.</param>
@@ -34,17 +48,17 @@ namespace Banks.API.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                if (!ModelState.IsValid)
                 {
-                    var result = await accountService.GetClientAccountsByCode(bankId, clientCode);
-                    return Ok(result);
+                    return BadRequest();
                 }
+                var result = await accountService.GetClientAccountsByCode(bankId, clientCode);
+                return Ok(result);
             }
             catch (Exception ex)
             {
                 return BadRequest(new BadRequestViewModel(ex));
-            }
-            return BadRequest();
+            }            
         }
 
         /// <summary>       

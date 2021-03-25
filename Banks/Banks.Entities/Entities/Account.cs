@@ -15,16 +15,19 @@ namespace Banks.Entities
         /// </summary>
         [Required]
         public string Number { get; set ; }
+
         /// <summary>
         /// Gets or sets currency as enum.
         /// </summary>
         [Required]
         public Currencies Currency { get; set; }
+
         /// <summary>
         /// Gets or sets client id. 
         /// </summary>
         [Required]
         public int ClientId { get; set; }
+
         /// <summary>
         /// Navigation to client.
         /// </summary>

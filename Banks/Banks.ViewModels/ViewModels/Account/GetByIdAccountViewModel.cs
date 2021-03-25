@@ -11,14 +11,17 @@ namespace Banks.ViewModels.ViewModels.Account
         /// Gets or sets number of account.
         /// </summary>
         public int Number { get; set; }
+
         /// <summary>
         /// Gets or sets client's full name, whish consist firstName and lastName.
         /// </summary>
         public string ClientFullName { get; set; }
+
         /// <summary>
-        /// Gets or sets client's identidication code.
+        /// Gets or sets client's identification code.
         /// </summary>
         public string ClientCode { get; set; }
+
         /// <summary>
         /// Gets or sets kind of currency in string format for preview on UI.
         /// </summary>

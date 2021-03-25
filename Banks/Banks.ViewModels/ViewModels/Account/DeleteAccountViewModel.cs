@@ -11,6 +11,7 @@ namespace Banks.ViewModels.ViewModels.Account
         /// 
         /// </summary>
        public string Number { get; set; }
+
         /// <summary>
        /// 
        /// </summary>

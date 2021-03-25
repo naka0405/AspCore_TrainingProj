@@ -14,8 +14,8 @@ namespace Banks.API.AutoMapper
         public MapperProfile()
         {
             CreateMap<Account, AccountGetAllAccountViewModelItem>()
-                .ForMember(x => x.ClientFullName, opt => opt
-                  .MapFrom(src => src.Client.FirstName + " " + src.Client.LastName))
+                .ForMember (x => x.ClientFullName, opt => opt
+                  .MapFrom(src => $" {src.Client.FirstName} { src.Client.LastName}"))
             .ForMember(x => x.BankId, opt => opt
               .MapFrom(src => src.Client.BankId))
             .ForMember(x => x.Code, opt => opt
@@ -31,7 +31,7 @@ namespace Banks.API.AutoMapper
 
             CreateMap<Account, GetByIdAccountViewModel>()
                 .ForMember(x => x.ClientFullName, opt => opt
-                  .MapFrom(src => src.Client.FirstName + " " + src.Client.LastName))
+                  .MapFrom(src =>$"{src.Client.FirstName} { src.Client.LastName}"))
                 .ForMember(x => x.Currency, opt => opt.MapFrom(src => src.Currency.ToString()));
 
             CreateMap<UpdateAccountViewModel, Account>()                

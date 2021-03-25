@@ -14,6 +14,7 @@ namespace Banks.Entities
         /// </summary>
         [Required]
         public string BankName { get; set; }
+
         /// <summary>
         /// Collection of clients.
         /// </summary>

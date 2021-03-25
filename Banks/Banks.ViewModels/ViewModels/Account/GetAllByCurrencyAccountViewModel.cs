@@ -11,6 +11,7 @@ namespace Banks.ViewModels.Models
         /// Gets or sets id of Bank in database.
         /// </summary>
         public int BankId { get; set; }
+
         /// <summary>
         /// Gets or sets kind of currency for search.
         /// </summary>

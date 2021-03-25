@@ -11,6 +11,9 @@ namespace Banks.DataAccess
     /// <summary>       
     /// Provides general methods for work with entities from db.         
     /// </summary>
+    /// <summary>       
+    /// TEntity is generic parametr for entity.         
+    /// </summary>
     public class BaseRepository<TEntity> : IBaseRepository<TEntity>, IDisposable
         where TEntity : BaseEntity
     {

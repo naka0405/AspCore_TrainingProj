@@ -3,11 +3,21 @@
 namespace Banks.ViewModels.Models
 {
     /// <summary>       
-    /// viewModel for inheritance with generic collection   
+    /// ViewModel for inheritance with generic collection.   
     /// </summary>
+    /// <summary>       
+    /// TView is  generic parametr for viewModel.   
+    /// </summary> 
     public class CollectionBaseViewModel<TView> 
     {
+        /// <summary>
+        /// Gets or sets collection of viewModels.
+        /// </summary>
         public List<TView> Items { get; set; }
+
+        /// <summary>
+        /// Gets or sets count of collection.
+        /// </summary>
         public int Count => Items.Count;
 
         public CollectionBaseViewModel()

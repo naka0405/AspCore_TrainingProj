@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Banks.BusinessLogic.Interfaces;
 using Banks.DataAccess;
-using Banks.Entities;
 using Banks.Entities.Entities;
 using Banks.ViewModels.Models;
 using System;
@@ -11,7 +10,10 @@ using System.Threading.Tasks;
 namespace Banks.BusinessLogic.Services
 {
     /// <summary>       
-    /// Base service class with general methods to manipulate entities.
+    /// Base service class with functionality to work with entities.
+    /// </summary>
+    ///  /// <summary>       
+    /// TEntity is generic parametr for entity.         
     /// </summary>
     public class BaseService<TEntity>: IBaseService<TEntity>
         where TEntity : BaseEntity, new()
@@ -29,7 +31,7 @@ namespace Banks.BusinessLogic.Services
         }
 
         /// <summary>       
-        /// Get account by Id or exepption if not found.
+        /// Get account by Id.
         /// </summary>
         public virtual async Task<TView> GetById<TView>(int id) where TView:BaseViewModel
         {            
@@ -43,7 +45,7 @@ namespace Banks.BusinessLogic.Services
         }
 
         /// <summary>       
-        /// Get all accounts from db for selecting in specific services.
+        /// Get all accounts for selecting in specific services.
         /// </summary>
         protected virtual async Task<List<TView>> GetAll<TView>() 
         {
@@ -58,7 +60,7 @@ namespace Banks.BusinessLogic.Services
         }
 
         /// <summary>       
-        /// Delete account.
+        /// Delete entity method.
         /// </summary>
         public virtual async Task Delete(int id)
         {
@@ -73,7 +75,7 @@ namespace Banks.BusinessLogic.Services
         }
 
         /// <summary>       
-        /// Map viewModel from api to entity and insert it in the db.
+        /// Method for create entity.
         /// </summary>
         public virtual async Task<int> Create<TView>(TView model) where TView : BaseViewModel
         {            
@@ -84,7 +86,7 @@ namespace Banks.BusinessLogic.Services
         }
 
         /// <summary>       
-        /// Get entity for update from db, try update using map viewmodel on it.
+        /// Method for update entity.
         /// </summary>
         public virtual async Task Update<TView>(TView model) where TView : BaseViewModel
         {

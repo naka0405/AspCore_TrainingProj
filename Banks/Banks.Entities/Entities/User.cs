@@ -15,6 +15,7 @@ namespace Banks.Entities.Entities
         [Required]
         [PersonalData]
         public int Year { get; set; }
+
         /// <summary>
         /// Gets or sets collectionof clients, because user can has
         /// many client status in different banks.
