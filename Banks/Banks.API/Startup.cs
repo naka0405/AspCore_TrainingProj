@@ -1,9 +1,14 @@
 using AutoMapper;
+using Banks.API;
 using Banks.API.AutoMapper;
-using Banks.DataAccess;
+using Banks.BusinessLogic;
+using Banks.BusinessLogic.Interfaces;
 using Banks.BusinessLogic.Services;
+using Banks.DataAccess;
 using Banks.DataAccess.Interfaces;
+using Banks.DataAccess.Repositories;
 using Banks.Entities.Entities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -11,8 +16,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Banks.DataAccess.Repositories;
-using Banks.BusinessLogic.Interfaces;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Banks.Api
 {
@@ -30,11 +36,31 @@ namespace Banks.Api
         {
             services.AddDbContext<ApplicationContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
+            services.AddSwaggerGen();
             services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationContext>();
-            services.AddAuthentication();
+                .AddEntityFrameworkStores<ApplicationContext>()
+                .AddDefaultTokenProviders();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(options =>
+                    {
+                        options.RequireHttpsMetadata = false;
+                        options.TokenValidationParameters = new TokenValidationParameters
+                        {                          
+                            ValidateIssuer = true,                           
+                            ValidIssuer = Configuration["JwtToken:Issuer"],
+                            ValidateAudience = true,                         
+                            ValidAudience = Configuration["JwtToken:Audience"],                        
+                            ValidateLifetime = true,                          
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtToken:Secret"])),                          
+                            ValidateIssuerSigningKey = true,
+                        };
+                    });
+            services.Configure<JwtTokenConfig>(Configuration.GetSection("JwtToken"));
             services.AddControllers();
+            services.AddControllersWithViews()
+    .AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
             var mappingConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new MapperProfile());
@@ -45,6 +71,9 @@ namespace Banks.Api
             services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IAccountRepository, AccountRepository>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IAuthJwtManager, AuthJwtManager>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,6 +86,12 @@ namespace Banks.Api
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseHttpsRedirection();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.RoutePrefix = string.Empty;
+            });
 
             app.UseRouting();
 

@@ -11,8 +11,8 @@ using System.Threading.Tasks;
 namespace Banks.BusinessLogic.Services
 {
     /// <summary>       
-    /// service class to relation Dal and Api according to
-    /// client requests. Use mapper, entity and viewModels 
+    /// Service class to relation Dal and Api according to
+    /// client requests. Use mapper, entity and viewModels. 
     /// </summary>
     public class AccountService:BaseService<Account>, IAccountService        
     {
@@ -26,7 +26,7 @@ namespace Banks.BusinessLogic.Services
         }
 
         /// <summary>       
-        /// get accounts using search parameter integer code of currency
+        /// Get accounts using search parameter integer code of currency.
         /// </summary>
         public async Task<GetAllAccountViewModel> GetByCurrency(int bankId, int currencyCode)
         {

@@ -76,7 +76,7 @@ namespace Banks.BusinessLogic.Services
         /// Map viewModel from api to entity and insert it in the db.
         /// </summary>
         public virtual async Task<int> Create<TView>(TView model) where TView : BaseViewModel
-        {
+        {            
             var entity = mapper.Map<TEntity>(model);
             await repository.Insert(entity);
             await repository.SaveChanges();

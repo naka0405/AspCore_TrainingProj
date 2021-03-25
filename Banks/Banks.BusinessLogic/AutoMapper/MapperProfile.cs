@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Banks.Entities;
+using Banks.Entities.Entities;
 using Banks.ViewModels.ViewModels.Account;
+using Banks.ViewModels.ViewModels.Users;
 
 namespace Banks.API.AutoMapper
 {
@@ -34,6 +36,8 @@ namespace Banks.API.AutoMapper
 
             CreateMap<UpdateAccountViewModel, Account>()                
                 .ForMember(x => (int)x.Currency, opt => opt.MapFrom(src => src.Currency));
+
+            CreateMap<User, JwtViewModel>();
         }
     }
 }

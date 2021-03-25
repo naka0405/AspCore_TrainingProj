@@ -1,19 +1,16 @@
 ﻿using AutoMapper;
 using Banks.BusinessLogic.Interfaces;
 using Banks.BusinessLogic.Services;
-using Banks.DataAccess;
 using Banks.DataAccess.Interfaces;
 using Banks.Entities;
+using Banks.Entities.Enums;
 using Banks.ViewModels.ViewModels.Account;
+using FluentAssertions;
 using Moq;
 using NUnit.Framework;
-using System.Threading.Tasks;
-using FluentAssertions;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Banks.Entities.Enums;
-using Banks.ViewModels.Models;
+using System.Threading.Tasks;
 
 namespace Banks.BusinessLogicTests
 {
@@ -163,6 +160,30 @@ namespace Banks.BusinessLogicTests
 
             Func<Task> fanc = async () => await accountService.Delete(1);
             await fanc.Should().ThrowAsync<ArgumentException>().WithMessage("Cannot delete null entity.");
+        }
+
+        [Test]
+        public async Task Create_GetModelWithLinksOnExistentId_NotException()
+        {
+            var entityToInsert = new Account() { ClientId = 1, Currency = Currencies.Uah, Number = "Uah1111111" };
+            var createAccountViewModel = new CreateAccountViewModel() { BankId = 1, ClientId = 1, CurrencyCode = 1, Number = 1111111 };            
+            mockMapper.Setup(x => x.Map<Account>(It.Is<CreateAccountViewModel>(x=>x==createAccountViewModel)))
+                .Returns(entityToInsert);
+            accountRepoMock.Setup(x => x.Insert(entityToInsert)).Returns(Task.FromResult(entityToInsert.Id));
+            var result = await accountService.Create(createAccountViewModel);
+            result.Should().Be(0);
+        }
+
+        [Test]
+        public async Task Create_GetValidViewModel_RepositoryMethodsCalled()
+        {
+            var entityToInsert = new Account() { ClientId = 11, Currency = Currencies.Uah, Number = "Uah1111111" };
+            var createAccountViewModel = new CreateAccountViewModel() { BankId = 1, ClientId = 11, CurrencyCode = 1, Number = 1111111 };
+            mockMapper.Setup(x => x.Map<Account>(It.Is<CreateAccountViewModel>(x => x == createAccountViewModel)))
+                .Returns(entityToInsert);
+            await accountService.Create(createAccountViewModel);           
+            accountRepoMock.Verify(x => x.Insert(It.IsAny<Account>()), Times.Once);
+            accountRepoMock.Verify(x => x.SaveChanges(), Times.Once);
         }
     }
 }
