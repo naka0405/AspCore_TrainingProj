@@ -2,11 +2,9 @@
 using Banks.ViewModels.Enums;
 using Banks.ViewModels.ViewModels;
 using Banks.ViewModels.ViewModels.Account;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Banks.API.Controllers
@@ -16,8 +14,8 @@ namespace Banks.API.Controllers
     /// Contains all methods for performing accounts.
     /// </summary>
     [Route("api/[controller]/[action]")]
-    [ApiController]
-    [Authorize]
+    [ApiController]  
+    [Authorize(AuthenticationSchemes="Bearer")]
     public class AccountController : ControllerBase
     {
         private readonly IAccountService accountService;
@@ -26,23 +24,12 @@ namespace Banks.API.Controllers
             accountService = service;
         }
 
-        [HttpGet]
-        [Authorize]
-        public async Task<IEnumerable<string>> Get()
-        {
-
-            var accessToken = await HttpContext.GetTokenAsync("access_token");
-
-            return new string[] { accessToken };
-        }
 
         /// <summary>       
         /// Get all accounts by identification code of client.
         /// </summary>
         /// <param name="bankId">A integer precision number.</param>
         /// <param name="clientCode">A string clientCode.</param>
-
-
         [HttpGet]
         public async Task<IActionResult> GetAllByCode([FromQuery] int bankId, string clientCode)
         {
