@@ -108,7 +108,7 @@ namespace Banks.API.Controllers
                 {                   
                     return Ok(newId);
                 }
-                return BadRequest(new BadRequestViewModel(ErrorCodes.ServerError));
+                return BadRequest("Server Error!");
             }
             catch (Exception ex)
             {

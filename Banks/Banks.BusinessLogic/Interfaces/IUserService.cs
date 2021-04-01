@@ -8,8 +8,19 @@ namespace Banks.BusinessLogic.Interfaces
     /// An interface which consists methods to work with User entity.
     /// </summary>
     public interface IUserService
-    {        
+    {
+        /// <summary>
+        /// Logs user into the system.
+        /// </summary>
+        /// <param name="model">View model with parameters.</param>
+        /// <returns>View model with access token.</returns>
         Task<JwtViewModel> LogIn(LoginUserViewModel model);
-        Task<JwtViewModel> Create(RegistrationUserViewModel model);
+
+        /// <summary>
+        /// Creates new user.
+        /// </summary>
+        /// <param name="model">View model with parameters.</param>
+        /// <returns>View model with access token.</returns>
+        Task<JwtViewModel> Registration(RegistrationUserViewModel model);
     }
 }

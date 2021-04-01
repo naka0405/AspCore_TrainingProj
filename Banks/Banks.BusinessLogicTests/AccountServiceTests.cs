@@ -166,7 +166,7 @@ namespace Banks.BusinessLogicTests
         public async Task Create_GetModelWithLinksOnExistentId_NotException()
         {
             var entityToInsert = new Account() { ClientId = 1, Currency = Currencies.Uah, Number = "Uah1111111" };
-            var createAccountViewModel = new CreateAccountViewModel() { BankId = 1, ClientId = 1, CurrencyCode = 1, Number = 1111111 };            
+            var createAccountViewModel = new CreateAccountViewModel() { BankId = 1, ClientId = 1, Currency = Currencies.Uah, Number = 1111111 };            
             mockMapper.Setup(x => x.Map<Account>(It.Is<CreateAccountViewModel>(x=>x==createAccountViewModel)))
                 .Returns(entityToInsert);
             accountRepoMock.Setup(x => x.Insert(entityToInsert)).Returns(Task.FromResult(entityToInsert.Id));
@@ -178,7 +178,7 @@ namespace Banks.BusinessLogicTests
         public async Task Create_GetValidViewModel_RepositoryMethodsCalled()
         {
             var entityToInsert = new Account() { ClientId = 11, Currency = Currencies.Uah, Number = "Uah1111111" };
-            var createAccountViewModel = new CreateAccountViewModel() { BankId = 1, ClientId = 11, CurrencyCode = 1, Number = 1111111 };
+            var createAccountViewModel = new CreateAccountViewModel() { BankId = 1, ClientId = 11, Currency =Currencies.Uah, Number = 1111111 };
             mockMapper.Setup(x => x.Map<Account>(It.Is<CreateAccountViewModel>(x => x == createAccountViewModel)))
                 .Returns(entityToInsert);
             await accountService.Create(createAccountViewModel);           

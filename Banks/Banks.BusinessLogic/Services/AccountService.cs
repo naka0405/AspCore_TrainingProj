@@ -17,17 +17,18 @@ namespace Banks.BusinessLogic.Services
     public class AccountService:BaseService<Account>, IAccountService        
     {
         private readonly IAccountRepository accountRepo;
+
         /// <summary>
-        /// Has repository and mapper injection.
-        /// </summary>       
+        /// Creates an instance of AccountService.
+        /// </summary> 
+        /// <param name="mapper">Defines instance of Mapper.</param>
+        /// <param name="repository">Defines instance of account repository.</param>
         public AccountService(IAccountRepository repository, IMapper mapper):base(repository, mapper)
         {
             accountRepo = repository;            
         }
 
-        /// <summary>       
-        /// Get accounts using search parameter integer code of currency.
-        /// </summary>
+        ///<inheritdoc/>
         public async Task<GetAllAccountViewModel> GetByCurrency(int bankId, int currencyCode)
         {
             var selectedItems=(await this.GetAll<AccountGetAllAccountViewModelItem>()).Where(x => x.BankId == bankId && (int)x.Currency == currencyCode)
@@ -40,9 +41,7 @@ namespace Banks.BusinessLogic.Services
             return collectionViewModel;
         }
 
-        /// <summary>       
-        /// Get all accounts by bankId, clientCode
-        /// </summary>
+        ///<inheritdoc/>
         public async Task<GetAllAccountViewModel> GetClientAccountsByCode(int bankId, string clientCode)
         {
             var accounts = (await accountRepo.GetByClientCode(bankId, clientCode)).ToList();
@@ -54,10 +53,7 @@ namespace Banks.BusinessLogic.Services
            return collectionViewModel;
         }
 
-        /// <summary>       
-        /// Update entity from Db getting datas from UI.
-        /// </summary>
-        /// <param name="model">Consists new values of entity properties.</param>        
+        ///<inheritdoc/>        
         public async Task Update(UpdateAccountViewModel model)
         {           
             var entity = await this.repository.GetById(model.Id);

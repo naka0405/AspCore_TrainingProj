@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Banks.Entities
 {
     /// <summary>       
-    /// Define client entity which has navigation property Bank as one and many accounts.        
+    /// Defines client entity.        
     /// </summary>
     public class Client : BaseEntity
     {
@@ -31,18 +31,18 @@ namespace Banks.Entities
         public string Code { get; set; }
 
         /// <summary>
-        /// Gets or sets bank id from linked table.
+        /// Gets or sets bank id.
         /// </summary>
         public int BankId { get; set; }
 
         /// <summary>
-        /// Gets or sets novigation property bank.
+        /// Gets or sets bank.
         /// </summary>
         [ForeignKey("BankId")]
         public virtual Bank Bank {get;set;}
 
         /// <summary>
-        /// Gets or sets user id from linked table.
+        /// Gets or sets user id.
         /// </summary>
         [Required]
         public string UserId { get; set; }

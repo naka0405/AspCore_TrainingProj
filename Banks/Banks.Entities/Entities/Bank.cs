@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Banks.Entities
 {
     /// <summary>       
-    /// Define bank entity which has collection Clients as one to many.        
+    /// Defines bank entity.        
     /// </summary>
     public class Bank:BaseEntity
     {

@@ -3,7 +3,7 @@
 namespace Banks.ViewModels.ViewModels.Account
 {
     /// <summary>       
-    /// ViewModel for return account by id.      
+    /// ViewModel to return account by id.      
     /// </summary>
     public class GetByIdAccountViewModel:BaseViewModel
     {

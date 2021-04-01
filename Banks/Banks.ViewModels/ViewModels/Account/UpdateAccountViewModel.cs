@@ -1,9 +1,10 @@
-﻿using Banks.ViewModels.Models;
+﻿using Banks.Entities.Enums;
+using Banks.ViewModels.Models;
 
 namespace Banks.ViewModels.ViewModels.Account
 {
     /// <summary>       
-    /// ViewModel for set new datas and update.
+    /// ViewModel to set new datas and update.
     /// </summary>
     public class UpdateAccountViewModel:BaseViewModel
     {
@@ -15,6 +16,6 @@ namespace Banks.ViewModels.ViewModels.Account
         /// <summary>
         /// Gets or sets kind of currency in integer format matches to enum.
         /// </summary>
-        public int Currency { get; set; }
+        public Currencies Currency { get; set; }
     }
 }

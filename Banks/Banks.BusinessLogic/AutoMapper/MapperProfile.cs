@@ -15,7 +15,7 @@ namespace Banks.API.AutoMapper
         {
             CreateMap<Account, AccountGetAllAccountViewModelItem>()
                 .ForMember (x => x.ClientFullName, opt => opt
-                  .MapFrom(src => $" {src.Client.FirstName} { src.Client.LastName}"))
+                  .MapFrom(src => $"{src.Client.FirstName} { src.Client.LastName}"))
             .ForMember(x => x.BankId, opt => opt
               .MapFrom(src => src.Client.BankId))
             .ForMember(x => x.Code, opt => opt
@@ -24,8 +24,8 @@ namespace Banks.API.AutoMapper
               .MapFrom(src => src.Number));
 
             CreateMap<CreateAccountViewModel, Account>()
-                .ForMember(x => x.Number, opt => opt.MapFrom(src => src.Account))
-                .ForMember(x => (int)x.Currency, opt => opt.MapFrom(src => src.CurrencyCode));
+                .ForMember(x => x.Number, opt => opt.MapFrom(src => src.Currency.ToString()+src.Number.ToString()))
+                .ForMember(x => x.Currency, opt => opt.MapFrom(src => src.Currency));
              
             CreateMap<DeleteAccountViewModel, Account>();
 
@@ -35,7 +35,7 @@ namespace Banks.API.AutoMapper
                 .ForMember(x => x.Currency, opt => opt.MapFrom(src => src.Currency.ToString()));
 
             CreateMap<UpdateAccountViewModel, Account>()                
-                .ForMember(x => (int)x.Currency, opt => opt.MapFrom(src => src.Currency));
+                .ForMember(x => x.Currency, opt => opt.MapFrom(src => src.Currency));
 
             CreateMap<User, JwtViewModel>();
         }

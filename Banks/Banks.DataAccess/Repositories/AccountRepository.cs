@@ -10,16 +10,14 @@ using System.Threading.Tasks;
 namespace Banks.DataAccess.Repositories
 {
     /// <summary>       
-    /// Implement baseRepository and consist another convinient method for work with accountEntity in Db. 
+    /// Contains methods to access Account entity data. 
     /// </summary>
     public class AccountRepository: BaseRepository<Account>, IAccountRepository
     {
         public AccountRepository(ApplicationContext context):base(context)
         { }
 
-        /// <summary>       
-        /// Get all accounts from db by specific bankId, clientCode.        
-        /// </summary>
+        ///<inheritdoc/>
         public async Task<IEnumerable<Account>>GetByClientCode(int bankId, string code)
         {           
            return await this.appContext.Accounts
@@ -29,25 +27,19 @@ namespace Banks.DataAccess.Repositories
                 .ToListAsync();            
         }
 
-        /// <summary>       
-        /// Get account from db by Id.       
-        /// </summary>
+        ///<inheritdoc/>
         public override async Task<Account> GetById(int id)
         {
             return await this.appContext.Accounts.Include(x => x.Client).ThenInclude(x=>x.Bank).FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        /// <summary>       
-        /// Get all accounts from db including Client and Bank entity for everyone.        
-        /// </summary>
+        ///<inheritdoc/>
         public override async Task<IEnumerable<Account>>GetAll()
         {
             return await this.appContext.Accounts.Include(x => x.Client).ThenInclude(x => x.Bank).ToListAsync();
         }
 
-        /// <summary>       
-        /// Get all accounts from db by specific predicate.        
-        /// </summary>
+        ///<inheritdoc/>
         public override async Task<IEnumerable<Account>> GetAll(Expression<Func<Account,bool>> predicate)
         {
             return await this.appContext.Accounts.Include(x => x.Client).ThenInclude(x=>x.Bank).ToListAsync();

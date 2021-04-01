@@ -3,12 +3,12 @@
 namespace Banks.ViewModels.Models
 {
     /// <summary>       
-    /// ViewModel for select accounts by currency.      
+    /// ViewModel to select accounts by currency.      
     /// </summary>
     public class GetAllByCurrencyAccountViewModel
     {
         /// <summary>
-        /// Gets or sets id of Bank in database.
+        /// Gets or sets id of the Bank.
         /// </summary>
         public int BankId { get; set; }
 

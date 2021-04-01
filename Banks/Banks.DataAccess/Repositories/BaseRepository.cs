@@ -9,82 +9,71 @@ using System.Threading.Tasks;
 namespace Banks.DataAccess
 {
     /// <summary>       
-    /// Provides general methods for work with entities from db.         
+    /// Provides general methods for work with entities.         
     /// </summary>
-    /// <summary>       
-    /// TEntity is generic parametr for entity.         
-    /// </summary>
+    /// <typeparam name = "TEntity" > TEntity is generic parameter for entity.</<typeparam>
     public class BaseRepository<TEntity> : IBaseRepository<TEntity>, IDisposable
         where TEntity : BaseEntity
     {
         protected ApplicationContext appContext;
         protected DbSet<TEntity> dbSet;
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="context">Gives the inctance of application context.</param>
         public BaseRepository(ApplicationContext context)
         {
             appContext = context;
             dbSet = context.Set<TEntity>();
         }
 
-        /// <summary>       
-        /// Remove entity.       
-        /// </summary>
+        /// <inheritdoc/>
         public virtual void Delete(TEntity entityToDelete)
         {
             dbSet.Remove(entityToDelete);
         }
 
-        /// <summary>       
-        /// Get entity by id.       
-        /// </summary>
+        /// <inheritdoc/>
         public virtual async Task<TEntity> GetById(int id)
         {
             return await dbSet.FindAsync(id);
         }
 
-        /// <summary>       
-        /// Insert entity to table.        
-        /// </summary>
+        /// <inheritdoc/>
         public virtual async Task Insert(TEntity entity)
         {
-           await dbSet.AddAsync(entity);          
+            await dbSet.AddAsync(entity);
         }
 
-        /// <summary>       
-        /// Update entity in Db.        
-        /// </summary>
+        /// <inheritdoc/>
         public void Update(TEntity entityToUpdate)
         {
             appContext.Entry(entityToUpdate).State = EntityState.Modified;
         }
 
-        /// <summary>       
-        /// Save changes in this context to the Db.
-        /// </summary>
+        /// <inheritdoc/>
         public async Task SaveChanges()
         {
-           await appContext.SaveChangesAsync();
+            await appContext.SaveChangesAsync();
         }
 
-        /// <summary>       
-        /// Get all records from Db table.       
-        /// </summary>
+        /// <inheritdoc/>
         public virtual async Task<IEnumerable<TEntity>> GetAll()
         {
             return await dbSet.AsNoTracking().ToListAsync();
         }
 
-        /// <summary>       
-        /// Get all records from Db table by predicate.        
-        /// </summary>
+        /// <inheritdoc/>
         public virtual async Task<IEnumerable<TEntity>> GetAll(Expression<Func<TEntity, bool>> predicate)
         {
             return await dbSet.AsNoTracking().Where(predicate).ToListAsync();
         }
 
+        /// <inheritdoc/>
         public void Dispose()
         {
             appContext.Dispose();
-        } 
+        }
     }
 }

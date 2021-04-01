@@ -19,6 +19,13 @@ namespace Banks.BusinessLogic.Services
         private readonly IMapper mapper;
         private readonly IAuthJwtManager authJwtManager;
 
+        /// <summary>
+        /// Creates an instance of UserSrvice.
+        /// </summary>
+        /// <param name="userManager">Instance of UserManager.</param>
+        /// <param name="manager">Instance of AuthJwtManager</param>
+        /// <param name="mapper">Instance of Mapper.</param>
+        /// <param name="signInManager">Instance of SignInManager.</param>
         public UserService(UserManager<User> userManager, IAuthJwtManager manager, IMapper mapper, SignInManager<User> signInManager)//UserManager<User> manager, SignInManager<User> signInManager
         {
             this.userManager = userManager;
@@ -27,14 +34,11 @@ namespace Banks.BusinessLogic.Services
             this.authJwtManager = manager;
         }
 
-        /// <summary>
-        /// Consists authentication functionality-gets user, check passwords and create/add new access token.
-        /// </summary>      
-        /// <param name="model">Consists login and password of user.</param>
-        /// <returns>ViewModel with jwt token.</returns>
+        ///<inheritdoc/>
         public async Task<JwtViewModel> LogIn(LoginUserViewModel model)
         {
             var user = await userManager.FindByNameAsync(model.Login);
+            string errorMessage = "A user with specified login wasn't found!";
             if (user != null)
             {
                 var result = await signInManager.CheckPasswordSignInAsync(user, model.Password, false);
@@ -42,38 +46,36 @@ namespace Banks.BusinessLogic.Services
                 {
                     // create JWT-token
                     return new JwtViewModel
-                    {                       
+                    {
                         Token = authJwtManager.GenerateToken(user)
                     };
                 }
                 else
                 {
-                    throw new ArgumentException("Password doesn't match!");
+                    throw new ArgumentException(errorMessage);
                 }
             }
-            throw new ArgumentException("User not found!"); ;
+            throw new ArgumentException(errorMessage); ;
         }
-      
-        /// <summary>
-        /// Create new user and access token at registration process.
-        /// </summary> 
-        /// <param name="model">Consists login, password, year of birth and confirm password.</param>
-        public async Task<JwtViewModel> Create(RegistrationUserViewModel model)
+
+        ///<inheritdoc/>
+        public async Task<JwtViewModel> Registration(RegistrationUserViewModel model)
         {
+            string errorMessage = "Server error!";
             var user = new User { Email = model.Email, UserName = model.Login, Year = model.Year };
             var result = await userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
                 var userViewModel = new JwtViewModel();
-                mapper.Map<User, JwtViewModel>(user, userViewModel);                
-                userViewModel.Token = this.authJwtManager.GenerateToken(user); 
+                mapper.Map<User, JwtViewModel>(user, userViewModel);
+                userViewModel.Token = this.authJwtManager.GenerateToken(user);
                 return userViewModel;
             }
             else
             {
-                throw new ArgumentException();
+                throw new ArgumentException(errorMessage);
             }
-            throw new ArgumentException("It's Ok");
+            throw new ArgumentException(errorMessage);
         }
     }
 }

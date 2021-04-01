@@ -11,19 +11,32 @@ namespace Banks.DataAccess
     /// </summary>
     public class ApplicationContext : IdentityDbContext<User>
     {
+        /// <summary>
+        /// Defines a collection of clients in the context.
+        /// </summary>
         public DbSet<Client> Clients { get; set; }
+
+        /// <summary>
+        /// Defines a collection of accounts in the context.
+        /// </summary>
         public DbSet<Account> Accounts { get; set; }
+
+        /// <summary>
+        /// Defines a collection of banks in the context.
+        /// </summary>
         public DbSet<Bank> Banks { get; set; }
 
+        /// <summary>
+        /// Constructor for context.
+        /// </summary>
+        /// <param name="options">Encapsulates configuration options.</param>
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
         {            
             Database.EnsureCreated();
         }
 
-        // <summary>       
-        ///  Method which defines relationships between tables  and fills the base with primary values.      
-        /// </summary>
+        ///<inheritdoc/>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

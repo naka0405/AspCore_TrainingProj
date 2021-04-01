@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 namespace Banks.BusinessLogic.Services
 {
     /// <summary>       
-    /// Base service class with functionality to work with entities.
+    /// Base service class with methods to work with entities.
     /// </summary>
-    ///  /// <summary>       
+    /// <summary>       
     /// TEntity is generic parametr for entity.         
     /// </summary>
     public class BaseService<TEntity>: IBaseService<TEntity>
@@ -22,17 +22,17 @@ namespace Banks.BusinessLogic.Services
         protected readonly IMapper mapper;
 
         /// <summary>
-        /// Has generic repository and mapper injection.
-        /// </summary>       
+        /// Сreates an instance of BaseService.
+        /// </summary>
+        /// <param name="mapper">Instance of Mapper.</param>
+        /// <param name="repository">Instance of BaseRepository.</param>
         public BaseService(IBaseRepository<TEntity> repository, IMapper mapper)
         {
             this.repository = repository;
             this.mapper = mapper;
         }
 
-        /// <summary>       
-        /// Get account by Id.
-        /// </summary>
+       ///<inheritdoc/>
         public virtual async Task<TView> GetById<TView>(int id) where TView:BaseViewModel
         {            
             TEntity entity = await repository.GetById(id);  
@@ -44,9 +44,7 @@ namespace Banks.BusinessLogic.Services
             return viewModel;
         }
 
-        /// <summary>       
-        /// Get all accounts for selecting in specific services.
-        /// </summary>
+        ///<inheritdoc/>
         protected virtual async Task<List<TView>> GetAll<TView>() 
         {
             var entities =await repository.GetAll();
@@ -59,9 +57,7 @@ namespace Banks.BusinessLogic.Services
             return collectionVM;
         }
 
-        /// <summary>       
-        /// Delete entity method.
-        /// </summary>
+        ///<inheritdoc/>
         public virtual async Task Delete(int id)
         {
             var entity = await repository.GetById(id);
@@ -74,9 +70,7 @@ namespace Banks.BusinessLogic.Services
             await repository.SaveChanges();
         }
 
-        /// <summary>       
-        /// Method for create entity.
-        /// </summary>
+        ///<inheritdoc/>
         public virtual async Task<int> Create<TView>(TView model) where TView : BaseViewModel
         {            
             var entity = mapper.Map<TEntity>(model);
@@ -85,9 +79,7 @@ namespace Banks.BusinessLogic.Services
             return entity.Id;
         }
 
-        /// <summary>       
-        /// Method for update entity.
-        /// </summary>
+        ///<inheritdoc/>
         public virtual async Task Update<TView>(TView model) where TView : BaseViewModel
         {
             var entity = await repository.GetById(model.Id);
@@ -100,9 +92,7 @@ namespace Banks.BusinessLogic.Services
             await repository.SaveChanges();
         }
 
-        /// <summary>       
-        /// Disposing injected repository if that need
-        /// </summary>
+        ///<inheritdoc/>
         public void Dispose()
         {
             if (repository == null)

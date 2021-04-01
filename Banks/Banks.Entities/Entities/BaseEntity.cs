@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Banks.Entities.Entities
 {
     /// <summary>       
-    /// Define base entity with general property Id for implementation others specific entities.   
+    /// Defines base entity.   
     /// </summary>
     public class BaseEntity
     {

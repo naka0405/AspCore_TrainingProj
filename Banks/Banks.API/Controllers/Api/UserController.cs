@@ -62,7 +62,7 @@ namespace Banks.API.Controllers.Api
                 {
                     return BadRequest(new { errorText = "Invalid username or password." });
                 }
-                var result = await userService.Create(model);
+                var result = await userService.Registration(model);
                 return Ok(result);
             }
             catch(Exception ex)
