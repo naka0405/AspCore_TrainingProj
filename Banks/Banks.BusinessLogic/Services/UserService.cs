@@ -20,13 +20,13 @@ namespace Banks.BusinessLogic.Services
         private readonly IAuthJwtManager authJwtManager;
 
         /// <summary>
-        /// Creates an instance of UserSrvice.
+        /// Creates an instance of UserService.
         /// </summary>
         /// <param name="userManager">Instance of UserManager.</param>
         /// <param name="manager">Instance of AuthJwtManager</param>
         /// <param name="mapper">Instance of Mapper.</param>
         /// <param name="signInManager">Instance of SignInManager.</param>
-        public UserService(UserManager<User> userManager, IAuthJwtManager manager, IMapper mapper, SignInManager<User> signInManager)//UserManager<User> manager, SignInManager<User> signInManager
+        public UserService(UserManager<User> userManager, IAuthJwtManager manager, IMapper mapper, SignInManager<User> signInManager)
         {
             this.userManager = userManager;
             this.mapper = mapper;
@@ -38,7 +38,7 @@ namespace Banks.BusinessLogic.Services
         public async Task<JwtViewModel> LogIn(LoginUserViewModel model)
         {
             var user = await userManager.FindByNameAsync(model.Login);
-            string errorMessage = "A user with specified login wasn't found!";
+            string errorMessage = "A user with specified login wasn't found or the password didn't match!";
             if (user != null)
             {
                 var result = await signInManager.CheckPasswordSignInAsync(user, model.Password, false);
@@ -74,8 +74,7 @@ namespace Banks.BusinessLogic.Services
             else
             {
                 throw new ArgumentException(errorMessage);
-            }
-            throw new ArgumentException(errorMessage);
+            }           
         }
     }
 }
