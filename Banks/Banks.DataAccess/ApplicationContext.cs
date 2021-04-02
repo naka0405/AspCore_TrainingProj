@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Banks.DataAccess
 {
     /// <summary>       
-    /// Determines the content and configure context.        
+    /// Determines the content and configures the data context.        
     /// </summary>
     public class ApplicationContext : IdentityDbContext<User>
     {
@@ -27,9 +27,9 @@ namespace Banks.DataAccess
         public DbSet<Bank> Banks { get; set; }
 
         /// <summary>
-        /// Constructor for context.
+        /// Creates an instance of ApplicationContext.
         /// </summary>
-        /// <param name="options">Encapsulates configuration options.</param>
+        /// <param name="options">Data context configuration options.</param>
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
         {            

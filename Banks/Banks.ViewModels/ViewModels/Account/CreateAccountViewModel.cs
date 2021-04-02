@@ -1,16 +1,17 @@
 ﻿using Banks.Entities.Enums;
 using Banks.ViewModels.Models;
 
+
 namespace Banks.ViewModels.ViewModels.Account
 {
     /// <summary>       
     /// ViewModel to create a new account.        
     /// </summary>
     public class CreateAccountViewModel:BaseViewModel
-    {
+    {       
         /// <summary>
         /// Gets or sets id of the bank.
-        /// </summary>
+        /// </summary>       
         public int BankId { get; set; }
 
         /// <summary>

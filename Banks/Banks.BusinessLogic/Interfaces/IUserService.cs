@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 namespace Banks.BusinessLogic.Interfaces
 {
     /// <summary>
-    /// An interface which consists methods to work with User entity.
+    /// An interface that consists of methods to work with User entity.
     /// </summary>
     public interface IUserService
     {
