@@ -11,7 +11,7 @@ namespace Banks.Users.ViewModels
         public string Email { get; set; }
 
         [Required]
-        [Display(Name = "Birthday Year")]
+        [Display(Name = "Birth Year")]
         public int Year { get; set; }
 
         [Required]
