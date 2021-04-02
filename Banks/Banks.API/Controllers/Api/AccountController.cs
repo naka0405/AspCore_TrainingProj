@@ -1,5 +1,4 @@
 ﻿using Banks.BusinessLogic.Interfaces;
-using Banks.ViewModels.Enums;
 using Banks.ViewModels.ViewModels;
 using Banks.ViewModels.ViewModels.Account;
 using Microsoft.AspNetCore.Authorization;
@@ -10,8 +9,8 @@ using System.Threading.Tasks;
 namespace Banks.API.Controllers
 {
     /// <summary>
-    /// The controller class to manage AccountEntity.
-    /// Contains all methods for performing accounts.
+    /// The controller class to manage Account entity.
+    /// Contains methods for performing accounts.
     /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]  
@@ -19,6 +18,11 @@ namespace Banks.API.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IAccountService accountService;
+
+        /// <summary>
+        /// Creates an instance of AccountController.
+        /// </summary>
+        /// <param name="service">Instance of AccountService.</param>
         public AccountController(IAccountService service)
         {
             accountService = service;
@@ -51,7 +55,7 @@ namespace Banks.API.Controllers
         /// <summary>       
         /// Get all accounts by bankId, int currencyCode.
         /// </summary>
-        /// <param name="currencyCode">A integer precision number, which matchs to enum.</param>
+        /// <param name="currencyCode">Account currency code.</param>
         [HttpGet]
         public async Task<IActionResult> GetAllByCurrency([FromQuery] int bankId, int currencyCode)
         {
@@ -73,6 +77,7 @@ namespace Banks.API.Controllers
         /// <summary>       
         /// Get account by Id.
         /// </summary>
+        /// <param name="id">Identifier for the account.</param>
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -94,6 +99,7 @@ namespace Banks.API.Controllers
         /// <summary>       
         /// Create new account for client.
         /// </summary>
+        /// <param name="model">View model with parameters.</param>
         [HttpPost]
         public async Task<IActionResult> Create(CreateAccountViewModel model)
         {
@@ -119,6 +125,7 @@ namespace Banks.API.Controllers
         /// <summary>       
         /// Update number, currency for account.
         /// </summary>
+        /// <param name="model">View model with parameters.</param>
         [HttpPut]
         public async Task<IActionResult> Update(UpdateAccountViewModel model)
         {
@@ -140,6 +147,7 @@ namespace Banks.API.Controllers
         /// <summary>       
         /// Delete some account.
         /// </summary>
+        /// <param name="id">Identifier for the account.</param>
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {

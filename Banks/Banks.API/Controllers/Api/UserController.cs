@@ -20,6 +20,10 @@ namespace Banks.API.Controllers.Api
     {
         private readonly IUserService userService;
         
+        /// <summary>
+        /// Creates an instance of UserController.
+        /// </summary>
+        /// <param name="userService">Instance of UserService.</param>
         public UserController(IUserService userService)
         {
             this.userService = userService;
@@ -28,7 +32,7 @@ namespace Banks.API.Controllers.Api
         /// <summary>
         /// Method for user authentication.
         /// </summary>
-        /// <param name="model">Gets or sets Login and password </param>
+        /// <param name="model">Login request view model.</param>
         /// <returns>ViewModel consists token or BadRequest with error message.</returns>
         [HttpPost]
         public async Task<IActionResult> LogIn(LoginUserViewModel model)
@@ -49,9 +53,9 @@ namespace Banks.API.Controllers.Api
         }
 
         /// <summary>
-        /// Method for set user registration that is create new user.
+        /// Method to create new user.
         /// </summary>
-        /// <param name="model">Gets or sets login, email, password, password confirm,  year of birt for new user.</param>
+        /// <param name="model">User registration data.</param>
         /// <returns>ViewModel with token or BadRequest with message.</returns>
         [HttpPost]
         public async Task<IActionResult> Registration(RegistrationUserViewModel model)

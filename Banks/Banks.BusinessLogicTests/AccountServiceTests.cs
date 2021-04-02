@@ -4,6 +4,7 @@ using Banks.BusinessLogic.Services;
 using Banks.DataAccess.Interfaces;
 using Banks.Entities;
 using Banks.Entities.Enums;
+using Banks.ViewModels.Enums;
 using Banks.ViewModels.ViewModels.Account;
 using FluentAssertions;
 using Moq;
@@ -52,16 +53,16 @@ namespace Banks.BusinessLogicTests
         }
 
         [Test]
-        public async Task GetByCurrency_GotExistentParams_ViewModelCount1()
+        public async Task GetByCurrency_GotExistentParams_ViewModelCountAndWithRequestedItems()
         {
             IEnumerable<Account> entities = new List<Account>(){
-                new Account{Id=1, Client=new Client(){Id=1, BankId=1 }, Currency=Currencies.Rub },
-                new Account{Id=2, Client=new Client(){Id=2, BankId=2 }, Currency=Currencies.Uah }
+                new Account{Id=1, Client=new Client(){Id=1, BankId=1 }, Currency=Entities.Enums.Currencies.Rub },
+                new Account{Id=2, Client=new Client(){Id=2, BankId=2 }, Currency=Entities.Enums.Currencies.Uah }
             };
             var items = new List<AccountGetAllAccountViewModelItem>()
             {
-                  new AccountGetAllAccountViewModelItem(){Id=1, Currency=Currencies.Uah, BankId=1 },
-                  new AccountGetAllAccountViewModelItem(){Id=2, BankId=2, Currency=Currencies.Uah }
+                  new AccountGetAllAccountViewModelItem(){Id=1, Currency=ViewModels.Enums.Currencies.Uah, BankId=1 },
+                  new AccountGetAllAccountViewModelItem(){Id=2, BankId=2, Currency=ViewModels.Enums.Currencies.Uah }
             };
             accountRepoMock.Setup(x => x.GetAll())
         .Returns(Task.FromResult(entities));
@@ -69,7 +70,14 @@ namespace Banks.BusinessLogicTests
                       .Returns(items);
             var result = await accountService.GetByCurrency(1, 1);
             result.Count.Should().Be(1);
+            for (int i=0; i<result.Items.Count;i++)
+            {               
+                result.Items[i].BankId.Should().Be(1);
+                result.Items[i].Currency.Should().Be(1);
+                result.Items[i].Id.Should().Be(items[i].Id);
+            }           
         }
+       
 
         [Test]
         public async Task GetByCurrency_GotNotExistentParams_ListViewModelCount0()
@@ -78,7 +86,7 @@ namespace Banks.BusinessLogicTests
             var items = new List<AccountGetAllAccountViewModelItem>();
 
             accountRepoMock.Setup(x => x.GetAll())
-        .Returns(Task.FromResult(entities));
+            .Returns(Task.FromResult(entities));
             mockMapper.Setup(x => x.Map<List<AccountGetAllAccountViewModelItem>>(It.IsAny<List<Account>>()))
                       .Returns(items);
             var result = await accountService.GetByCurrency(1, 1);
@@ -86,7 +94,7 @@ namespace Banks.BusinessLogicTests
         }
 
         [Test]
-        public async Task GetClientAccountsByCode_GotExistentParams_ViewModelCount1()
+        public async Task GetClientAccountsByCode_GotExistentParams_ViewModelCountAndWithRequestedItems()
         {
             IEnumerable<Account> entities = new List<Account>(){
                 new Account{Id=1, Client=new Client(){Id=1, BankId=1, Code="123456" } }
@@ -101,6 +109,30 @@ namespace Banks.BusinessLogicTests
                       .Returns(items);
             var result = await accountService.GetClientAccountsByCode(1, "123456");
             result.Count.Should().Be(1);
+            for (int i = 0; i < result.Items.Count; i++)
+            {
+                result.Items[i].BankId.Should().Be(1);
+                result.Items[i].Code.Should().Be("123456");
+                result.Items[i].Id.Should().Be(items[i].Id);
+            }
+        }
+
+        [Test]
+        public async Task GetClientAccountsByCode_GotExistentParams_ViewModel()
+        {
+            IEnumerable<Account> entities = new List<Account>(){
+                new Account{Id=1, Client=new Client(){Id=1, BankId=1, Code="123456" } }
+            };
+            var items = new List<AccountGetAllAccountViewModelItem>()
+            {
+                  new AccountGetAllAccountViewModelItem(){Id=1, Code="123456", BankId=1 }
+            };
+            accountRepoMock.Setup(x => x.GetByClientCode(It.Is<int>(x => x > 0), It.IsAny<string>()))
+        .Returns(Task.FromResult(entities));
+            mockMapper.Setup(x => x.Map<List<AccountGetAllAccountViewModelItem>>(It.IsAny<List<Account>>()))
+                      .Returns(items);
+            var result = await accountService.GetClientAccountsByCode(1, "123456");
+            result.GetType().Should().Be(typeof(GetAllAccountViewModel));
         }
 
         [Test]
@@ -134,7 +166,7 @@ namespace Banks.BusinessLogicTests
         public async Task Update_ModelWithNotExistentId_Exception()
         {
             UpdateAccountViewModel viewModel = new UpdateAccountViewModel() { Id = 120 };
-            accountRepoMock.Setup(x => x.GetById(It.Is<int>(x=>x>0)))
+            accountRepoMock.Setup(x => x.GetById(It.Is<int>(x => x > 0)))
         .Returns(Task.FromResult<Account>(null));
             Func<Task> fanc = async () => await accountService.Update(viewModel);
             await fanc.Should().ThrowAsync<ArgumentException>();
@@ -144,10 +176,10 @@ namespace Banks.BusinessLogicTests
         public async Task Delete_GetExistentId_NotException()
         {
             var entity = new Account() { Id = 1, ClientId = 1, Currency = Entities.Enums.Currencies.Uah, Number = "123" };
-                       
+
             accountRepoMock.Setup(x => x.GetById(It.Is<int>(i => i > 0)))
             .Returns(Task.FromResult(entity));
-           
+
             Func<Task> fanc = async () => await accountService.Delete(entity.Id);
             await fanc.Should().NotThrowAsync();
         }
@@ -165,9 +197,9 @@ namespace Banks.BusinessLogicTests
         [Test]
         public async Task Create_GetModelWithLinksOnExistentId_NotException()
         {
-            var entityToInsert = new Account() { ClientId = 1, Currency = Currencies.Uah, Number = "Uah1111111" };
-            var createAccountViewModel = new CreateAccountViewModel() { BankId = 1, ClientId = 1, Currency = Currencies.Uah, Number = 1111111 };            
-            mockMapper.Setup(x => x.Map<Account>(It.Is<CreateAccountViewModel>(x=>x==createAccountViewModel)))
+            var entityToInsert = new Account() { ClientId = 1, Currency = Entities.Enums.Currencies.Uah, Number = "Uah1111111" };
+            var createAccountViewModel = new CreateAccountViewModel() { BankId = 1, ClientId = 1, Currency = ViewModels.Enums.Currencies.Uah, Number = 1111111 };
+            mockMapper.Setup(x => x.Map<Account>(It.Is<CreateAccountViewModel>(x => x == createAccountViewModel)))
                 .Returns(entityToInsert);
             accountRepoMock.Setup(x => x.Insert(entityToInsert)).Returns(Task.FromResult(entityToInsert.Id));
             var result = await accountService.Create(createAccountViewModel);
@@ -177,11 +209,11 @@ namespace Banks.BusinessLogicTests
         [Test]
         public async Task Create_GetValidViewModel_RepositoryMethodsCalled()
         {
-            var entityToInsert = new Account() { ClientId = 11, Currency = Currencies.Uah, Number = "Uah1111111" };
-            var createAccountViewModel = new CreateAccountViewModel() { BankId = 1, ClientId = 11, Currency =Currencies.Uah, Number = 1111111 };
+            var entityToInsert = new Account() { ClientId = 11, Currency = Entities.Enums.Currencies.Uah, Number = "Uah1111111" };
+            var createAccountViewModel = new CreateAccountViewModel() { BankId = 1, ClientId = 11, Currency = ViewModels.Enums.Currencies.Uah, Number = 1111111 };
             mockMapper.Setup(x => x.Map<Account>(It.Is<CreateAccountViewModel>(x => x == createAccountViewModel)))
                 .Returns(entityToInsert);
-            await accountService.Create(createAccountViewModel);           
+            await accountService.Create(createAccountViewModel);
             accountRepoMock.Verify(x => x.Insert(It.IsAny<Account>()), Times.Once);
             accountRepoMock.Verify(x => x.SaveChanges(), Times.Once);
         }

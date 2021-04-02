@@ -1,5 +1,6 @@
 using AutoMapper;
 using Banks.API.AutoMapper;
+using Banks.API.Extentions;
 using Banks.BusinessLogic;
 using Banks.BusinessLogic.Interfaces;
 using Banks.BusinessLogic.Services;
@@ -30,59 +31,17 @@ namespace Banks.Api
 
         public IConfiguration Configuration { get; }
 
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Title = "Banks API",
-                    Version = "v1"
-                });
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                {
-                    In = ParameterLocation.Header,
-                    Description = "Please insert JWT with Bearer into field",
-                    Name = "Authorization",
-                    Type = SecuritySchemeType.ApiKey
-                });
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement {
-   {
-     new OpenApiSecurityScheme
-     {
-       Reference = new OpenApiReference
-       {
-         Type = ReferenceType.SecurityScheme,
-         Id = "Bearer"
-       }
-      },
-      new string[] { }
-    }
-  });
-            });
-
+            services.SwaggerGen();
             services.AddIdentity<User, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationContext>()
             .AddDefaultTokenProviders();
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                    .AddJwtBearer(options =>
-                    {
-                        options.RequireHttpsMetadata = false;
-                        options.SaveToken = true;
-                        options.TokenValidationParameters = new TokenValidationParameters
-                        {
-                            ValidateIssuer = true,
-                            ValidIssuer = Configuration["JwtToken:Issuer"],
-                            ValidateAudience = true,
-                            ValidAudience = Configuration["JwtToken:Audience"],
-                            ValidateLifetime = true,
-                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtToken:Secret"])),
-                            ValidateIssuerSigningKey = true,
-                        };
-                    });
+            services.SetAuthentication(Configuration);          
             services.Configure<JwtTokenConfig>(Configuration.GetSection("JwtToken"));
             services.AddControllers();
             services.AddControllersWithViews()
@@ -102,6 +61,7 @@ namespace Banks.Api
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IAuthJwtManager, AuthJwtManager>();
         }
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -129,7 +89,7 @@ namespace Banks.Api
                 endpoints.MapControllers();
                 endpoints.MapControllerRoute(
              name: "defaultApi",
-                   pattern: "api/{controller=AccountApi}/{action=Index}/{id?}");
+             pattern: "api/{controller=AccountApi}/{action=Index}/{id?}");
             });
         }
     }

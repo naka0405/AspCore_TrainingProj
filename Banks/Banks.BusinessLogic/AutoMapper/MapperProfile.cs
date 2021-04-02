@@ -26,8 +26,6 @@ namespace Banks.API.AutoMapper
             CreateMap<CreateAccountViewModel, Account>()
                 .ForMember(x => x.Number, opt => opt.MapFrom(src => src.Currency.ToString()+src.Number.ToString()))
                 .ForMember(x => x.Currency, opt => opt.MapFrom(src => src.Currency));
-             
-            CreateMap<DeleteAccountViewModel, Account>();
 
             CreateMap<Account, GetByIdAccountViewModel>()
                 .ForMember(x => x.ClientFullName, opt => opt

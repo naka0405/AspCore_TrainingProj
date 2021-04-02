@@ -71,10 +71,7 @@ namespace Banks.BusinessLogic.Services
                 userViewModel.Token = this.authJwtManager.GenerateToken(user);
                 return userViewModel;
             }
-            else
-            {
-                throw new ArgumentException(errorMessage);
-            }           
+            throw new ArgumentException(errorMessage);
         }
     }
 }

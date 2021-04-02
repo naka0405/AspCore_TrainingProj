@@ -1,4 +1,4 @@
-﻿using Banks.Entities.Enums;
+﻿using Banks.ViewModels.Enums;
 using Banks.ViewModels.Models;
 
 

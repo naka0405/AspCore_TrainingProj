@@ -1,10 +1,10 @@
-﻿using Banks.Entities.Enums;
+﻿using Banks.ViewModels.Enums;
 using Banks.ViewModels.Models;
 
 namespace Banks.ViewModels.ViewModels.Account
 {
     /// <summary>       
-    /// Child viewModel which implements generic viewModel with generic collection.        
+    /// View model to get a collection .        
     /// </summary>
     public class GetAllAccountViewModel:CollectionBaseViewModel<AccountGetAllAccountViewModelItem>
     {       
@@ -17,7 +17,7 @@ namespace Banks.ViewModels.ViewModels.Account
     public class AccountGetAllAccountViewModelItem:BaseViewModel
     {
         /// <summary>
-        /// Gets or sets id of the bank in Dbtable.
+        /// Gets or sets id of the bank.
         /// </summary>
         public int BankId { get; set; }
 

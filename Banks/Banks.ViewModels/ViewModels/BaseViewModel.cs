@@ -8,16 +8,6 @@
         /// <summary>
         /// Gets or sets id.
         /// </summary>
-        public int Id { get; set; }
-        
-        public BaseViewModel(int id=default)
-        {
-            this.Id = id;
-        }
-
-        public BaseViewModel()
-        {
-
-        }
+        public int Id { get; set; }       
     }
 }
