@@ -48,7 +48,7 @@ namespace Banks.Entities
         public string UserId { get; set; }
 
         /// <summary>
-        /// Gets or sets novigation property user.
+        /// Gets or sets user.
         /// </summary>
         [ForeignKey("UserId")]
         public virtual User User { get; set; }

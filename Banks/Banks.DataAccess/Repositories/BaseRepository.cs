@@ -19,9 +19,9 @@ namespace Banks.DataAccess
         protected DbSet<TEntity> dbSet;
 
         /// <summary>
-        /// Constructor.
+        /// Creates an instance of BaseRepository.
         /// </summary>
-        /// <param name="context">Gives the inctance of application context.</param>
+        /// <param name="context">Gives the instance of application context.</param>
         public BaseRepository(ApplicationContext context)
         {
             appContext = context;

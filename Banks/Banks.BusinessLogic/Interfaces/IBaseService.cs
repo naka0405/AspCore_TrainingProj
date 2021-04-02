@@ -16,14 +16,14 @@ namespace Banks.BusinessLogic.Interfaces
         /// Get account by Id.
         /// </summary> 
         /// <typeparam name="TView">Is generic type of view model.</typeparam>
-        /// <param name="id">Identifier of entity for searching.</param>
+        /// <param name="id">Identifier of the entity for searching.</param>
         /// <returns>Instance of view model.</returns>
         Task<TView> GetById<TView>(int id) where TView : BaseViewModel;
 
         /// <summary>
         /// Delete method.
         /// </summary>
-        ///<param name="id">Identifier of entity to delete.</param>       
+        ///<param name="id">Identifier of the entity to delete.</param>       
         Task Delete(int id);
 
         /// <summary>

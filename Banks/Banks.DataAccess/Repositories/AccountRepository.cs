@@ -14,6 +14,10 @@ namespace Banks.DataAccess.Repositories
     /// </summary>
     public class AccountRepository: BaseRepository<Account>, IAccountRepository
     {
+        /// <summary>
+        /// Creates an instance of AccountRepository.
+        /// </summary>
+        /// <param name="context">An instance of context.</param>
         public AccountRepository(ApplicationContext context):base(context)
         { }
 

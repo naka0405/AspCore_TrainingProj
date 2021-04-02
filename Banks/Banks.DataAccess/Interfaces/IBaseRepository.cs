@@ -14,45 +14,45 @@ namespace Banks.DataAccess
          where TEntity : BaseEntity
     {
         /// <summary>
-        /// Get all records from dataBases table.
+        /// Get all records from database table.
         /// </summary>   
         /// <returns>All entities.</returns>
         Task<IEnumerable<TEntity>> GetAll();
 
         /// <summary>
-        /// Get all records from databases table by predicate. 
+        /// Get all records from database table by predicate. 
         /// </summary>  
-        /// <param name="predicate">Consists search parameter.</params>
+        /// <param name="predicate">Contains search parameter.</params>
         /// <returns>All entities appropriate to parameter.</returns>
         Task<IEnumerable<TEntity>> GetAll(Expression<Func<TEntity, bool>> predicate);
 
         /// <summary>
         /// Remove entity.
         /// </summary>  
-        /// <param name="item">Consists instance of entity.</params> 
+        /// <param name="item">Instance of the entity to delete.</params> 
         void Delete(TEntity item);
 
         /// <summary>
         /// Get entity by id.
         /// </summary>   
-        /// <param name="id">Consists id of entity.</params> 
-        /// <returns>Entity with sought id.</returns>
+        /// <param name="id">Identifier of requested entity.</params> 
+        /// <returns>Entity with requested identifier.</returns>
         Task<TEntity> GetById(int id);
 
         /// <summary>
         /// Insert entity to table.
         /// </summary> 
-        /// <param name="entity">Consists instance of entity.</params>        
+        /// <param name="entity">Instance of the entity to insert .</params>        
         Task Insert(TEntity entity);
 
         /// <summary>
         /// Update entity in database.
         /// </summary>
-        /// <param name="entityToUpdate">Consists instance of entity.</params>
+        /// <param name="entityToUpdate">Instance of the entity to update.</params>
         void Update(TEntity entityToUpdate);
 
         /// <summary>
-        /// Save changes in this context to the database.
+        /// Save changes in this context.
         /// </summary>       
         Task SaveChanges();
     }
