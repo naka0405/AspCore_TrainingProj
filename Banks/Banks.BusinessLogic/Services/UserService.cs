@@ -23,7 +23,7 @@ namespace Banks.BusinessLogic.Services
         /// Creates an instance of UserService.
         /// </summary>
         /// <param name="userManager">Instance of UserManager.</param>
-        /// <param name="manager">Instance of AuthJwtManager</param>
+        /// <param name="manager">Instance of AuthJwtManager.</param>
         /// <param name="mapper">Instance of Mapper.</param>
         /// <param name="signInManager">Instance of SignInManager.</param>
         public UserService(UserManager<User> userManager, IAuthJwtManager manager, IMapper mapper, SignInManager<User> signInManager)

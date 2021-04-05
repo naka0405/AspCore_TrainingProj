@@ -16,15 +16,22 @@ namespace Banks.ViewModels.Models
         public List<TView> Items { get; set; }
 
         /// <summary>
-        /// Gets or sets count of collection.
+        /// Gets or sets count of the collection.
         /// </summary>
         public int Count => Items.Count;
 
+        /// <summary>
+        /// Creates an instance of the CollectionBaseViewModel;
+        /// </summary>
         public CollectionBaseViewModel()
         {
             Items = new List <TView>();            
         }
 
+        /// <summary>
+        /// Creates an instance of the CollectionBaseViewModel;
+        /// </summary>
+        /// <param name="collection"></param>
         public CollectionBaseViewModel(List<TView> collection)
         {
             Items = collection;           

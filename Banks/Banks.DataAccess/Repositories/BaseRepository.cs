@@ -21,7 +21,7 @@ namespace Banks.DataAccess
         /// <summary>
         /// Creates an instance of BaseRepository.
         /// </summary>
-        /// <param name="context">Gives the instance of application context.</param>
+        /// <param name="context">An instance of application context.</param>
         public BaseRepository(ApplicationContext context)
         {
             appContext = context;

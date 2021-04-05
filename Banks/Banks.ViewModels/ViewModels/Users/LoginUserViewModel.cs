@@ -1,7 +1,7 @@
 ﻿namespace Banks.ViewModels.ViewModels.Users
 {
     /// <summary>
-    /// ViewModel consists login and password of user for authentication.
+    /// ViewModel consists of login and password of user for authentication.
     /// </summary>
     public class LoginUserViewModel
     {

@@ -21,7 +21,7 @@ namespace Banks.BusinessLogic
         /// <summary>
         /// Creates an instance of AuthJwtManager.
         /// </summary>
-        /// <param name="jwtTokenConfig">Configuration for token.</param>
+        /// <param name="jwtTokenConfig">Configuration for access token.</param>
         public AuthJwtManager(IOptions<JwtTokenConfig> jwtTokenConfig)
         {
             this.jwtTokenConfig = jwtTokenConfig.Value;  

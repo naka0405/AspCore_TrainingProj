@@ -32,8 +32,9 @@ namespace Banks.API.Controllers
         /// <summary>       
         /// Get all accounts by identification code of client.
         /// </summary>
-        /// <param name="bankId">A integer precision number.</param>
-        /// <param name="clientCode">A string clientCode.</param>
+        /// <param name="bankId">A identifier of the bank.</param>
+        /// <param name="clientCode">A string of the client's identification code.</param>
+        /// <returns>ViewModel or BadRequest with error message.</returns>
         [HttpGet]
         public async Task<IActionResult> GetAllByCode([FromQuery] int bankId, string clientCode)
         {
@@ -43,7 +44,7 @@ namespace Banks.API.Controllers
                 {
                     return BadRequest();
                 }
-                var result = await accountService.GetClientAccountsByCode(bankId, clientCode);
+                GetAllAccountViewModel result = await accountService.GetClientAccountsByCode(bankId, clientCode);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -55,7 +56,9 @@ namespace Banks.API.Controllers
         /// <summary>       
         /// Get all accounts by bankId, int currencyCode.
         /// </summary>
+        /// <param name="bankId">A identifier of the bank.</param>
         /// <param name="currencyCode">Account currency code.</param>
+        /// <returns>ViewModel or BadRequest with error message.</returns>
         [HttpGet]
         public async Task<IActionResult> GetAllByCurrency([FromQuery] int bankId, int currencyCode)
         {
@@ -65,7 +68,7 @@ namespace Banks.API.Controllers
                 {
                     return BadRequest("Invalid input");
                 }
-                var result = await accountService.GetByCurrency(bankId, currencyCode);
+                GetAllAccountViewModel result = await accountService.GetByCurrency(bankId, currencyCode);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -78,6 +81,7 @@ namespace Banks.API.Controllers
         /// Get account by Id.
         /// </summary>
         /// <param name="id">Identifier for the account.</param>
+        /// <returns>ViewModel or BadRequest with error message.</returns>
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -87,7 +91,7 @@ namespace Banks.API.Controllers
                 {
                     return BadRequest("Invalid input");
                 }
-                var result = await accountService.GetById<GetByIdAccountViewModel>(id);
+                GetByIdAccountViewModel result = await accountService.GetById<GetByIdAccountViewModel>(id);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -100,6 +104,7 @@ namespace Banks.API.Controllers
         /// Create new account for client.
         /// </summary>
         /// <param name="model">View model with parameters.</param>
+        /// <returns>Idetifier of new account or BadRequest with error message.</returns>
         [HttpPost]
         public async Task<IActionResult> Create(CreateAccountViewModel model)
         {
@@ -126,6 +131,7 @@ namespace Banks.API.Controllers
         /// Update number, currency for account.
         /// </summary>
         /// <param name="model">View model with parameters.</param>
+        /// <returns>OkResult or BadRequest with error message.</returns>
         [HttpPut]
         public async Task<IActionResult> Update(UpdateAccountViewModel model)
         {
@@ -148,6 +154,7 @@ namespace Banks.API.Controllers
         /// Delete some account.
         /// </summary>
         /// <param name="id">Identifier for the account.</param>
+        /// <returns>OkResult or BadRequest with error message.</returns>
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {

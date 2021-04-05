@@ -11,6 +11,9 @@ namespace Banks.API.AutoMapper
     /// </summary>
     public class MapperProfile : Profile
     {
+        /// <summary>
+        /// Creates mapper configuration.
+        /// </summary>
         public MapperProfile()
         {
             CreateMap<Account, AccountGetAllAccountViewModelItem>()

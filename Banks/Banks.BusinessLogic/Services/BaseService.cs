@@ -12,7 +12,7 @@ namespace Banks.BusinessLogic.Services
     /// <summary>       
     /// Base service class with methods to work with entities.
     /// </summary>
-    /// <typeparam name="TEntity">TEntity is generic parametr for entity. </typeparam> 
+    /// <typeparam name="TEntity">TEntity is generic parameter for entity. </typeparam> 
     public class BaseService<TEntity>: IBaseService<TEntity>
         where TEntity : BaseEntity, new()
     {

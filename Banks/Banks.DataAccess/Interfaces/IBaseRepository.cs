@@ -22,12 +22,12 @@ namespace Banks.DataAccess
         /// <summary>
         /// Get all records from database table by predicate. 
         /// </summary>  
-        /// <param name="predicate">Contains search parameter.</params>
-        /// <returns>All entities appropriate to parameter.</returns>
+        /// <param name="predicate">Contains the search parameter.</params>
+        /// <returns>All entities appropriate to the parameter.</returns>
         Task<IEnumerable<TEntity>> GetAll(Expression<Func<TEntity, bool>> predicate);
 
         /// <summary>
-        /// Remove entity.
+        /// Remove the entity.
         /// </summary>  
         /// <param name="item">Instance of the entity to delete.</params> 
         void Delete(TEntity item);
@@ -35,18 +35,18 @@ namespace Banks.DataAccess
         /// <summary>
         /// Get entity by id.
         /// </summary>   
-        /// <param name="id">Identifier of requested entity.</params> 
+        /// <param name="id">Identifier of the requested entity.</params> 
         /// <returns>Entity with requested identifier.</returns>
         Task<TEntity> GetById(int id);
 
         /// <summary>
-        /// Insert entity to table.
+        /// Insert entity to the table.
         /// </summary> 
         /// <param name="entity">Instance of the entity to insert .</params>        
         Task Insert(TEntity entity);
 
         /// <summary>
-        /// Update entity in database.
+        /// Update entity in  the database.
         /// </summary>
         /// <param name="entityToUpdate">Instance of the entity to update.</params>
         void Update(TEntity entityToUpdate);

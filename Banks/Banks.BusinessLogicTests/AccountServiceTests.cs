@@ -3,8 +3,6 @@ using Banks.BusinessLogic.Interfaces;
 using Banks.BusinessLogic.Services;
 using Banks.DataAccess.Interfaces;
 using Banks.Entities;
-using Banks.Entities.Enums;
-using Banks.ViewModels.Enums;
 using Banks.ViewModels.ViewModels.Account;
 using FluentAssertions;
 using Moq;
@@ -117,24 +115,7 @@ namespace Banks.BusinessLogicTests
             }
         }
 
-        [Test]
-        public async Task GetClientAccountsByCode_GotExistentParams_ViewModel()
-        {
-            IEnumerable<Account> entities = new List<Account>(){
-                new Account{Id=1, Client=new Client(){Id=1, BankId=1, Code="123456" } }
-            };
-            var items = new List<AccountGetAllAccountViewModelItem>()
-            {
-                  new AccountGetAllAccountViewModelItem(){Id=1, Code="123456", BankId=1 }
-            };
-            accountRepoMock.Setup(x => x.GetByClientCode(It.Is<int>(x => x > 0), It.IsAny<string>()))
-        .Returns(Task.FromResult(entities));
-            mockMapper.Setup(x => x.Map<List<AccountGetAllAccountViewModelItem>>(It.IsAny<List<Account>>()))
-                      .Returns(items);
-            var result = await accountService.GetClientAccountsByCode(1, "123456");
-            result.GetType().Should().Be(typeof(GetAllAccountViewModel));
-        }
-
+       
         [Test]
         public async Task GetClientAccountsByCode_GotNotExistentParams_ViewModelCount0()
         {

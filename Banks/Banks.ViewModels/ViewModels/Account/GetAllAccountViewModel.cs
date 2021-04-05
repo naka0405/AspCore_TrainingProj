@@ -22,7 +22,7 @@ namespace Banks.ViewModels.ViewModels.Account
         public int BankId { get; set; }
 
         /// <summary>
-        /// Gets or sets full name of the client as union first name and last name..
+        /// Gets or sets full name of the client as union first name and last name.
         /// </summary>
         public string ClientFullName { get; set; }
 
