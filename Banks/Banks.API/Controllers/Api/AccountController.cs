@@ -131,7 +131,7 @@ namespace Banks.API.Controllers
         /// Update number, currency for account.
         /// </summary>
         /// <param name="model">View model with parameters.</param>
-        /// <returns>OkResult or BadRequest with error message.</returns>
+        /// <returns>Ok Result or BadRequest with error message.</returns>
         [HttpPut]
         public async Task<IActionResult> Update(UpdateAccountViewModel model)
         {
@@ -154,7 +154,7 @@ namespace Banks.API.Controllers
         /// Delete some account.
         /// </summary>
         /// <param name="id">Identifier for the account.</param>
-        /// <returns>OkResult or BadRequest with error message.</returns>
+        /// <returns>Ok Result or BadRequest with error message.</returns>
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {

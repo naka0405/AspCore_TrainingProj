@@ -33,9 +33,9 @@ namespace Banks.BusinessLogicTests
             var entity = new Account() { Id = 1, ClientId = 1, Currency = Entities.Enums.Currencies.Uah, Number = "123" };
             var viewModel = new GetByIdAccountViewModel() { Id = 1 };
             mockMapper.Setup(x => x.Map<Account, GetByIdAccountViewModel>(It.IsAny<Account>()))
-                    .Returns(viewModel);
+                .Returns(viewModel);
             accountRepoMock.Setup(x => x.GetById(It.Is<int>(i => i > 0)))
-            .Returns(Task.FromResult(entity));
+                .Returns(Task.FromResult(entity));
             var result = await accountService.GetById<GetByIdAccountViewModel>(1);
             Assert.AreEqual(result, viewModel);
         }
@@ -45,7 +45,7 @@ namespace Banks.BusinessLogicTests
         {
             var entity = new Account() { Id = 1 };
             accountRepoMock.Setup(x => x.GetById(It.Is<int>(i => i > 1000)))
-            .Returns(Task.FromResult<Account>(null));
+                .Returns(Task.FromResult<Account>(null));
             Func<Task> act = async () => await accountService.GetById<GetByIdAccountViewModel>(2000);
             await act.Should().ThrowAsync<ArgumentException>().WithMessage("Such entity not found!");
         }
@@ -63,19 +63,19 @@ namespace Banks.BusinessLogicTests
                   new AccountGetAllAccountViewModelItem(){Id=2, BankId=2, Currency=ViewModels.Enums.Currencies.Uah }
             };
             accountRepoMock.Setup(x => x.GetAll())
-        .Returns(Task.FromResult(entities));
+                .Returns(Task.FromResult(entities));
             mockMapper.Setup(x => x.Map<List<AccountGetAllAccountViewModelItem>>(It.IsAny<List<Account>>()))
-                      .Returns(items);
+                .Returns(items);
             var result = await accountService.GetByCurrency(1, 1);
             result.Count.Should().Be(1);
-            for (int i=0; i<result.Items.Count;i++)
-            {               
+            for (int i = 0; i < result.Items.Count; i++)
+            {
                 result.Items[i].BankId.Should().Be(1);
                 result.Items[i].Currency.Should().Be(1);
                 result.Items[i].Id.Should().Be(items[i].Id);
-            }           
+            }
         }
-       
+
 
         [Test]
         public async Task GetByCurrency_GotNotExistentParams_ListViewModelCount0()
@@ -84,9 +84,9 @@ namespace Banks.BusinessLogicTests
             var items = new List<AccountGetAllAccountViewModelItem>();
 
             accountRepoMock.Setup(x => x.GetAll())
-            .Returns(Task.FromResult(entities));
+                .Returns(Task.FromResult(entities));
             mockMapper.Setup(x => x.Map<List<AccountGetAllAccountViewModelItem>>(It.IsAny<List<Account>>()))
-                      .Returns(items);
+                .Returns(items);
             var result = await accountService.GetByCurrency(1, 1);
             result.Count.Should().Be(0);
         }
@@ -102,9 +102,9 @@ namespace Banks.BusinessLogicTests
                   new AccountGetAllAccountViewModelItem(){Id=1, Code="123456", BankId=1 }
             };
             accountRepoMock.Setup(x => x.GetByClientCode(It.Is<int>(x => x > 0), It.IsAny<string>()))
-        .Returns(Task.FromResult(entities));
+                .Returns(Task.FromResult(entities));
             mockMapper.Setup(x => x.Map<List<AccountGetAllAccountViewModelItem>>(It.IsAny<List<Account>>()))
-                      .Returns(items);
+                .Returns(items);
             var result = await accountService.GetClientAccountsByCode(1, "123456");
             result.Count.Should().Be(1);
             for (int i = 0; i < result.Items.Count; i++)
@@ -115,7 +115,7 @@ namespace Banks.BusinessLogicTests
             }
         }
 
-       
+
         [Test]
         public async Task GetClientAccountsByCode_GotNotExistentParams_ViewModelCount0()
         {
@@ -123,9 +123,9 @@ namespace Banks.BusinessLogicTests
             var items = new List<AccountGetAllAccountViewModelItem>();
 
             accountRepoMock.Setup(x => x.GetAll())
-        .Returns(Task.FromResult(entities));
+                .Returns(Task.FromResult(entities));
             mockMapper.Setup(x => x.Map<List<AccountGetAllAccountViewModelItem>>(It.IsAny<List<Account>>()))
-                      .Returns(items);
+                .Returns(items);
             var result = await accountService.GetClientAccountsByCode(1, "123456");
             result.Count.Should().Be(0);
         }
@@ -136,9 +136,9 @@ namespace Banks.BusinessLogicTests
             UpdateAccountViewModel viewModel = new UpdateAccountViewModel() { Id = 1 };
             var entity = new Account() { Id = 1 };
             accountRepoMock.Setup(x => x.GetById(viewModel.Id))
-        .Returns(Task.FromResult(entity));
+                .Returns(Task.FromResult(entity));
             mockMapper.Setup(x => x.Map<UpdateAccountViewModel, Account>(viewModel, entity))
-                      .Returns(entity);
+                .Returns(entity);
             Func<Task> fanc = async () => await accountService.Update(viewModel);
             await fanc.Should().NotThrowAsync();
         }
@@ -148,7 +148,7 @@ namespace Banks.BusinessLogicTests
         {
             UpdateAccountViewModel viewModel = new UpdateAccountViewModel() { Id = 120 };
             accountRepoMock.Setup(x => x.GetById(It.Is<int>(x => x > 0)))
-        .Returns(Task.FromResult<Account>(null));
+                .Returns(Task.FromResult<Account>(null));
             Func<Task> fanc = async () => await accountService.Update(viewModel);
             await fanc.Should().ThrowAsync<ArgumentException>();
         }
@@ -159,7 +159,7 @@ namespace Banks.BusinessLogicTests
             var entity = new Account() { Id = 1, ClientId = 1, Currency = Entities.Enums.Currencies.Uah, Number = "123" };
 
             accountRepoMock.Setup(x => x.GetById(It.Is<int>(i => i > 0)))
-            .Returns(Task.FromResult(entity));
+                .Returns(Task.FromResult(entity));
 
             Func<Task> fanc = async () => await accountService.Delete(entity.Id);
             await fanc.Should().NotThrowAsync();
@@ -169,7 +169,7 @@ namespace Banks.BusinessLogicTests
         public async Task Delete_GetNonExistentId_Exception()
         {
             accountRepoMock.Setup(x => x.GetById(It.Is<int>(i => i > 0)))
-            .Returns(Task.FromResult<Account>(null));
+                .Returns(Task.FromResult<Account>(null));
 
             Func<Task> fanc = async () => await accountService.Delete(1);
             await fanc.Should().ThrowAsync<ArgumentException>().WithMessage("Cannot delete null entity.");

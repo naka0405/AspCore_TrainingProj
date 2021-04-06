@@ -13,7 +13,7 @@ namespace Banks.ViewModels.ViewModels.Account
         public int Number { get; set; }
 
         /// <summary>
-        /// Gets or sets client's full name, whish consist of firstName and lastName.
+        /// Gets or sets client's full name, which consist of firstName and lastName.
         /// </summary>
         public string ClientFullName { get; set; }
 

@@ -45,9 +45,9 @@ namespace Banks.Api
             services.Configure<JwtTokenConfig>(Configuration.GetSection("JwtToken"));
             services.AddControllers();
             services.AddControllersWithViews()
-    .AddNewtonsoftJson(options =>
-    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-);
+            .AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
             var mappingConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new MapperProfile());

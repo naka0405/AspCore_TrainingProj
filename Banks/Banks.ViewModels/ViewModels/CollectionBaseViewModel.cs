@@ -5,9 +5,7 @@ namespace Banks.ViewModels.Models
     /// <summary>       
     /// ViewModel for inheritance with generic collection.   
     /// </summary>
-    /// <summary>       
-    /// TView is  generic parametr for viewModel.   
-    /// </summary> 
+    /// <typeparam name="TView">TView is  generic parametr for viewModel.</typeparam> 
     public class CollectionBaseViewModel<TView> 
     {
         /// <summary>
@@ -31,7 +29,7 @@ namespace Banks.ViewModels.Models
         /// <summary>
         /// Creates an instance of the CollectionBaseViewModel;
         /// </summary>
-        /// <param name="collection"></param>
+        /// <param name="collection">List of items with TView type.</param>
         public CollectionBaseViewModel(List<TView> collection)
         {
             Items = collection;           
