@@ -1,6 +1,4 @@
-﻿using Banks.ViewModels.Enums;
-using Banks.ViewModels.ViewModels.Extentions;
-using System;
+﻿using System;
 
 namespace Banks.ViewModels.ViewModels
 {

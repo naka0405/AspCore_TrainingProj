@@ -10,7 +10,7 @@ namespace Banks.ViewModels.ViewModels.Account
         /// <summary>
         /// Gets or sets number of account.
         /// </summary>
-        public int Number { get; set; }
+        public string Number { get; set; }
 
         /// <summary>
         /// Gets or sets client's full name, which consist of firstName and lastName.
